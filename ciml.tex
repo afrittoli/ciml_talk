@@ -25,6 +25,7 @@
 %\usecolortheme{wolverine}
 %\usetheme{Boadilla}
 \usepackage[T1]{fontenc}
+\usepackage{animate}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -110,6 +111,40 @@
     \href{https://github.com/afrittoli/ciml\_talk}{https://github.com/afrittoli/ciml\_talk}
 \end{frame}
 }
+
+\section{Context}
+\begin{frame}
+    \frametitle{CI at Scale}
+    \begin{itemize}
+        \item{Continuous Integration}
+        \item{Continuous Log Data}
+        \item{Lot of data, little time}
+        \item{Triaging failures?}
+        \item{AI to the rescue!}
+    \end{itemize}
+    % Add a picture, perhaps test daily count?
+\end{frame}
+
+\begin{frame}
+    \frametitle{The OpenStack use case}
+    \begin{columns}
+      \column{0.4\linewidth}
+        \begin{itemize}
+            \item{Integration testing in a VM}
+            \item{System logs, application logs}
+            \item{TBD pic of dstat data}
+            \item{Dstat data}
+            \item{Not only OpenStack}
+        \end{itemize}
+      % Add a picture with dstat graph samples
+      \column{0.6\linewidth}
+        \begin{figure}
+        \begin{center}
+          \animategraphics[autoplay,width=1\linewidth]{1}{pics/1min_normalized_}{0}{99}
+        \end{center}
+        \end{figure}
+    \end{columns}
+\end{frame}
 
 \section{Questions}
 \begin{frame}[c]
