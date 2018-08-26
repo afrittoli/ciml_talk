@@ -148,7 +148,7 @@
 
 \section{Infrastructure}
 \begin{frame}
-    \frametitle{Building the dataset}
+    \frametitle{Collecting data}
     \begin{itemize}
         \item{TBD Automation in collecting data}
         \item{Object storage / Openwhisk}
@@ -158,27 +158,148 @@
 \begin{frame}
     \frametitle{Infrastructure for training}
     \begin{itemize}
+        \item{Sharing data, experiments and results}
         \item{Helm deployment}
         \item{Ffdl <- s3 input}
         \item{Experiment / dataset in Cloudant / via OpenWhisk API}
+        \item{TBD build a diagram for the training pipeline}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \frametitle{Infrastructure for prediction}
     \begin{itemize}
-        \item{MQTT}
-        \item{API / OpenWhisk}
+        \item{MQTT - near real time}
+        \item{Trained model on storage}
+        \item{Prediction in storage}
+        \item{OpenWhisk trigger -> comment on Gerrit/Github}
+        \item{Build a diagram for the NRT pipeline}
     \end{itemize}
 \end{frame}
 
 \section{Data}
 \begin{frame}
-    \frametitle{Data stability}
+    \frametitle{Data Selection}
     \begin{itemize}
+        \item{What is dstat data}
+        \item{Experiment Reproducibility}
         \item{Dataset selection}
-        \item{Reproducibility}
+        \begin{itemize}
+          \item{Feature selection}
+          \item{Sampling selection}
+        \end{itemize}
     \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Data Normalization}
+    \begin{itemize}
+        \item{Unrolling}
+        \item{Normalizing: (formula) x - mean / xmax - mmin}
+        \item{Graphs of normal and normalized features}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Building the dataset}
+    \begin{itemize}
+        \item{Split in training, dev, test}
+        \item{Store normalized data on s3}
+        \item{Input function for training}
+        \item{Input function for evaluation}
+    \end{itemize}
+\end{frame}
+
+\section{Experiments}
+\begin{frame}
+    \frametitle{SVM?}
+    \begin{itemize}
+        \item{Starting with SVM}
+        \item{Why yes, why not}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Single Class}
+    \begin{itemize}
+        \item{Varying feature selection}
+        \item{TBD Graph of accuracy with different features}
+        \item{TBD Graph of accuracy with different sampling}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Single Class}
+    \begin{itemize}
+        \item{Varying data sampling}
+        \item{Looking for Configurations}
+        \item{TBD Graph of accuracy with different sampling}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Changing test job}
+    \begin{itemize}
+        \item{Train with a CI Job}
+        \item{Evaluating with another CI Job (as well)}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Multi Class}
+    \begin{itemize}
+        \item{Detecting the Cloud Provider}
+        \item{Growing back number of features}
+        \item{Reducing down-sampling}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Multi Class}
+    \begin{itemize}
+        \item{Playing with the network topology}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Multi Class}
+    \begin{itemize}
+        \item{Reducing the number of classes}
+        \item{What does that mean}
+        \item{Why did it work}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Changing test job}
+    \begin{itemize}
+        \item{Train with a CI Job}
+        \item{Evaluating with another CI Job (as well)}
+    \end{itemize}
+\end{frame}
+
+\section{Conclusions}
+\begin{frame}
+  \frametitle{Conclusions}
+  \begin{itemize}
+      \item{Summary on DNN single class}
+      \item{Summary on DNN multi class}
+      \item{Collect data}
+      \item{Know your data}
+      \item{Work with cloud tools}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Future Work}
+  \begin{itemize}
+      \item{Complete setup of the pipeline}
+      \item{Human curated dataset for supervised training}
+      \item{Making our life easier}
+      \item{Integrate with real life CI system}
+      \item{Expore job portability}
+      \item{Tune opitization for quick convergence}
+  \end{itemize}
 \end{frame}
 
 \section{Questions}
