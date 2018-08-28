@@ -36,7 +36,7 @@
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
   breaklines=true,                 % sets automatic line breaking
   captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{openstack},  % comment style
+  commentstyle=\color{ibm},        % comment style
   extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
   keywordstyle=\color{blue},       % keyword style
@@ -47,7 +47,7 @@
   showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
   showstringspaces=false,          % underline spaces within strings only
   showtabs=false,                  % show tabs within strings adding particular underscores
-  stringstyle=\color{openstack},   % string literal style
+  stringstyle=\color{ibm},         % string literal style
 }
 
 \setbeamerfont{caption}{series=\normalfont,size=\fontsize{8}{10}}
@@ -114,33 +114,44 @@
 
 \section{Context}
 \begin{frame}
-    \frametitle{CI at Scale}
-    \begin{itemize}
-        \item{Continuous Integration}
-        \item{Continuous Log Data}
-        \item{Lot of data, little time}
-        \item{Triaging failures?}
-        \item{AI to the rescue!}
-    \end{itemize}
+  \frametitle{CI at Scale}
+  \begin{columns}
+    \column{0.6\linewidth}
+      \begin{figure}
+      \begin{center}
+        \includegraphics[width=1\textwidth]{graphs/daily_count.png}
+           \caption{Source: subunit2sql-graph dailycount}
+      \end{center}
+      \end{figure}
+    \column{0.4\linewidth}
+      \begin{itemize}
+          \item{Continuous Integration}
+          \item{Continuous Log Data}
+          \item{Lots of data, little time}
+          \item{Triaging failures?}
+          \item{AI to the rescue!}
+      \end{itemize}
     % Add a picture, perhaps test daily count?
+  \end{columns}
 \end{frame}
 
 \begin{frame}
     \frametitle{The OpenStack use case}
     \begin{columns}
-      \column{0.4\linewidth}
+      \column{0.5\linewidth}
         \begin{itemize}
             \item{Integration testing in a VM}
             \item{System logs, application logs}
-            \item{TBD pic of dstat data}
             \item{Dstat data}
+            \item{Gate testing}
             \item{Not only OpenStack}
         \end{itemize}
       % Add a picture with dstat graph samples
-      \column{0.6\linewidth}
+      \column{0.5\linewidth}
         \begin{figure}
         \begin{center}
-          \animategraphics[autoplay,width=1\linewidth]{1}{pics/1min_normalized_}{0}{99}
+          \animategraphics[autoplay,width=0.8\linewidth]{1}{graphs/100norm/1min_normalized_}{0}{99}
+            \caption{Normalized system average load for different examples}
         \end{center}
         \end{figure}
     \end{columns}
@@ -149,20 +160,54 @@
 \section{Infrastructure}
 \begin{frame}
     \frametitle{Collecting data}
-    \begin{itemize}
-        \item{TBD Automation in collecting data}
-        \item{Object storage / Openwhisk}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{figure}
+        \begin{center}
+          \includegraphics[width=1\textwidth]{diagrams/cache-data.png}
+             \caption{Data caching diagram}
+        \end{center}
+        \end{figure}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Automation and repeatability}
+            \item{Light-weight data validation}
+            \item{Object storage for data}
+            \item{Periodic Action on OpenWhisk}
+        \end{itemize}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Infrastructure for training}
+    \frametitle{Training Workflow}
+    \begin{columns}
+      \column{0.4\linewidth}
+        \begin{itemize}
+            \item{Visualize data}
+            \item{Define a dataset}
+            \item{Define an experiment}
+            \item{Run the training}
+            \item{Collect results}
+            \item{Visualize data}
+        \end{itemize}
+        \column{0.6\linewidth}
+          \begin{figure}
+            \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_dataset.sh}
+          \end{figure}
+          \begin{figure}
+            \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_experiment.sh}
+          \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Training Infrastructure}
     \begin{itemize}
-        \item{Sharing data, experiments and results}
-        \item{Helm deployment}
-        \item{Ffdl <- s3 input}
-        \item{Experiment / dataset in Cloudant / via OpenWhisk API}
-        \item{TBD build a diagram for the training pipeline}
+      \item{Sharing data, experiments and results}
+      \item{Helm deployment}
+      \item{Ffdl <- s3 input}
+      \item{Experiment / dataset in Cloudant / via OpenWhisk API}
+      \item{TBD build a diagram for the training pipeline}
     \end{itemize}
 \end{frame}
 
@@ -195,7 +240,8 @@
     \frametitle{Data Normalization}
     \begin{itemize}
         \item{Unrolling}
-        \item{Normalizing: (formula) x - mean / xmax - mmin}
+        \item{Normalizing}
+        % (formula) x - mean / xmax - mmin
         \item{Graphs of normal and normalized features}
     \end{itemize}
 \end{frame}
@@ -212,24 +258,15 @@
 
 \section{Experiments}
 \begin{frame}
-    \frametitle{SVM?}
-    \begin{itemize}
-        \item{Starting with SVM}
-        \item{Why yes, why not}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{DNN - Single Class}
+    \frametitle{DNN - Binary Classification}
     \begin{itemize}
         \item{Varying feature selection}
         \item{TBD Graph of accuracy with different features}
-        \item{TBD Graph of accuracy with different sampling}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{DNN - Single Class}
+    \frametitle{DNN - Binary Classification}
     \begin{itemize}
         \item{Varying data sampling}
         \item{Looking for Configurations}

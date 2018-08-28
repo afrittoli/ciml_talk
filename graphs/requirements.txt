@@ -1,0 +1,6 @@
+requests
+subunit2sql
+subunit2sql[graph]
+pymysql
+matplotlib
+pandas
