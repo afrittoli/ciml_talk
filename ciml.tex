@@ -421,7 +421,7 @@
               \item{\textbf{used}: Used Memory}
               \item{\textbf{1m}: System Load - 1min Average}
               \item{Data Resolution: \textbf{1min}}
-              \item{Source: TensorFlow evaluation output}
+              \item{Source: TensorFlow evaluation}
             \end{itemize}
             \item{Winner: (\textbf{usr}, \textbf{1m}) tuple}
             \item{Accuracy achieved: \emph{\textbf{0.995}}}
@@ -452,8 +452,8 @@
             \begin{itemize}
               \item{Original data frequency: 1s}
               \item{x-axis: new sampling rate}
-              \item{Source: TensorFlow evaluation output}
               \item{Features: (\textbf{usr}, \textbf{1m})}
+              \item{Source: TensorFlow evaluation}
             \end{itemize}
             \item{Winner: \textbf{1min}}
             \item{Accuracy achieved: \emph{\textbf{0.995}}}
@@ -563,21 +563,20 @@
 
 \begin{frame}
     \frametitle{DNN - Multi Class}
-    \begin{center}
       \begin{itemize}
         \item{Features: (usr, 1m)}
         \item{Resolution: 1min}
-        \item{Accuracy achieved: \emph{\textbf{0.995}}}
+        \item{Accuracy achieved: \emph{\textbf{0.668}}}
+        \item{Not good!}
       \end{itemize}
-    \end{center}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Multi Class - Growing back number of features}
+    \frametitle{Multi Class - Different Features}
     \begin{columns}
       \column{0.5\linewidth}
         \begin{itemize}
-            \item{Selecting the best feature set}
+            \item{Try different combinations of features}
             \item{Primary metric: accuracy}
             \item{Aim for lower loss, caveat: overfitting}
             \item{Key:}
@@ -588,43 +587,141 @@
               \item{Data Resolution: \textbf{1min}}
               \item{Source: TensorFlow evaluation output}
             \end{itemize}
-            \item{Winner: (\textbf{usr}, \textbf{1m}) tuple}
-            \item{Accuracy achieved: \emph{\textbf{0.995}}}
-            \item{3 mistakes on a 600 test set}
+            \item{No real improvement}
+            \item{Best accuracy achieved: \emph{\textbf{0.668}}}
+            \item{Adding Disk I/O or process data does not help either}
         \end{itemize}
       \column{0.5\linewidth}
         \begin{center}
         \begin{figure}
-          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_feature-status.png}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_feature-node_provider_all.png}
         \end{figure}
         \begin{figure}
-          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_feature-status.png}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_feature-node_provider_all.png}
         \end{figure}
       \end{center}
   \end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Multi Class - Increasing Resolution}
-    \begin{itemize}
-        \item{Playing with the network topology}
-    \end{itemize}
+    \frametitle{Multi Class - Changing Resolution}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Trying to change the data resolution}
+            \item{Primary metric: accuracy}
+            \item{Aim for lower loss, caveat: overfitting}
+            \item{Key:}
+            \begin{itemize}
+              \item{Original data frequency: 1s}
+              \item{x-axis: new sampling rate}
+              \item{Features: (\textbf{usr}, \textbf{1m})}
+              \item{Source: TensorFlow evaluation}
+            \end{itemize}
+            \item{No real improvement}
+            \item{Best accuracy achieved: \emph{\textbf{0.668}}}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_sampling-node_provider_all.png}
+        \end{figure}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_sampling-node_provider_all.png}
+        \end{figure}
+      \end{center}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Multi Class - Playing with the network topology}
-    \begin{itemize}
-        \item{Playing with the network topology}
-    \end{itemize}
+    \frametitle{Multi Class - Network topology}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Trying to change the network depth}
+            \item{Trying to change number of units per layer}
+            \item{Primary metric: accuracy}
+            \item{Aim for lower loss, caveat: overfitting}
+            \item{Key:}
+            \begin{itemize}
+              \item{x-axis: units and hidden layers}
+              \item{Features: (\textbf{usr}, \textbf{1m})}
+              \item{Resolution: \textbf{1min}}
+              \item{Source: TensorFlow evaluation}
+            \end{itemize}
+            \item{No real improvement}
+            \item{Best accuracy achieved: \emph{\textbf{0.668}}}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_topology-node_provider_all.png}
+        \end{figure}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_topology-node_provider_all.png}
+        \end{figure}
+      \end{center}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
     \frametitle{Multi Class - Reducing the number of classes}
-    \begin{itemize}
-        \item{Reducing the number of classes}
-        \item{What does that mean}
-        \item{Why did it work}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Reducing the number of classes}
+            \begin{itemize}
+                \item{Different regions from a Cloud Operator}
+                \item{Consider as a single class}
+                \item{New number of classes is \textbf{6}}
+            \end{itemize}
+            \item{Experiments:}
+            \begin{itemize}
+              \item{x-axis: units and hidden layers}
+              \item{Features: (\textbf{usr}, \textbf{1m})}
+              \item{Resolution: \textbf{1min}}
+            \end{itemize}
+            \item{Some improvement!}
+            \item{Winner: 3x100. Accuracy: \emph{\textbf{0.925}}}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_topology-node_provider.png}
+        \end{figure}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_topology-node_provider.png}
+        \end{figure}
+      \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Multi Class - Tuning network topology}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Tuning network topology}
+            \item{Experiments:}
+            \begin{itemize}
+              \item{Train with different feature sets}
+              \item{Train with different resolutions}
+              \item{Source: TensorFlow evaluation}
+            \end{itemize}
+            \item{Significant improvement!}
+            \item{Best accuracy achieved: \emph{\textbf{0.902}}}
+            \item{What does that mean?}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_feature-compare-classes.png}
+        \end{figure}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_sampling-compare-classes.png}
+        \end{figure}
+      \end{center}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
