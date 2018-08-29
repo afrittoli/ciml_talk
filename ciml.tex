@@ -381,6 +381,12 @@
             \item{Classes: Passed or Failed}
             \item{Supervised training}
             \item{TensorFlow \emph{DNNClassifier}, classes=2}
+            \item{Dataset:}
+            \begin{itemize}
+              \item{CI Job "tempest-full"}
+              \item{Gate pipeline only}
+              \item{2000 examples, 1400 training, 600 test}
+            \end{itemize}
             \item{Hyper-parameters:}
             \begin{itemize}
               \item{Activation Function: ReLU}
@@ -403,18 +409,66 @@
 
 \begin{frame}
     \frametitle{DNN - Binary Classification}
-    \begin{itemize}
-        \item{Looking for Configurations}
-        \item{TBD Graph of accuracy with different features}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Selecting the best feature set}
+            \item{Primary metric: accuracy}
+            \item{Aim for lower loss, caveat: overfitting}
+            \item{Key:}
+            \begin{itemize}
+              \item{\textbf{usr}: User CPU}
+              \item{\textbf{used}: Used Memory}
+              \item{\textbf{1m}: System Load - 1min Average}
+              \item{Data Resolution: \textbf{1min}}
+              \item{Source: TensorFlow evaluation output}
+            \end{itemize}
+            \item{Winner: (\textbf{usr}, \textbf{1m}) tuple}
+            \item{Accuracy achieved: \emph{\textbf{0.995}}}
+            \item{3 mistakes on a 600 test set}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_feature-status.png}
+        \end{figure}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_feature-status.png}
+        \end{figure}
+      \end{center}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
     \frametitle{DNN - Binary Classification}
-    \begin{itemize}
-        \item{Varying data sampling}
-        \item{TBD Graph of accuracy with different sampling}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Selecting the data resolution}
+            \item{Primary metric: accuracy}
+            \item{Aim for lower loss, caveat: overfitting}
+            \item{Note: careful with NaN after down-sampling}
+            \item{Key:}
+            \begin{itemize}
+              \item{Original data frequency: 1s}
+              \item{x-axis: new sampling rate}
+              \item{Source: TensorFlow evaluation output}
+              \item{Features: (\textbf{usr}, \textbf{1m})}
+            \end{itemize}
+            \item{Winner: \textbf{1min}}
+            \item{Accuracy achieved: \emph{\textbf{0.995}}}
+            \item{3 mistakes on a 600 test set}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_sampling-status.png}
+        \end{figure}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_sampling-status.png}
+        \end{figure}
+      \end{center}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
