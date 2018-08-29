@@ -353,13 +353,23 @@
 
 \begin{frame}
     \frametitle{Building the dataset}
-    \begin{itemize}
-        \item{Split in training, dev, test}
-        \item{Obtain classes}
-        \item{Store normalized data on s3}
-        \item{Input function for training}
-        \item{Input function for evaluation}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{figure}
+        \begin{center}
+          \includegraphics[width=0.9\textwidth]{diagrams/dataset.png}
+             \caption{Structure of a dataset}
+        \end{center}
+        \end{figure}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Split in training, dev, test}
+            \item{Obtain classes}
+            \item{Store normalized data on s3}
+            \item{Input function for training}
+            \item{Input function for evaluation}
+        \end{itemize}
+    \end{columns}
 \end{frame}
 
 \section{Experiments}
