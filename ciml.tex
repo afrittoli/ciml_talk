@@ -28,6 +28,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{animate}
 \usepackage{pgfplotstable}
+\usepackage{colortbl}
+\usepackage{booktabs}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -299,6 +301,11 @@
           \resizebox{0.7\linewidth}{!}{
             \pgfplotstabletypeset[
               columns/time/.style={string type},
+              every head row/.style={after row=\midrule},
+              every first row/.style={before row=\rowcolor{mygray}},
+              every nth row={5}{before row=\rowcolor{mygray}},
+              columns/usr/.style={column type/.add={>{\columncolor[gray]{.8}}}{}},
+              columns/1m/.style={column type/.add={>{\columncolor[gray]{.8}}}{}},
             ]{code/dstat_sample.csv}
           }
         \end{center}
@@ -308,18 +315,47 @@
 
 \begin{frame}
     \frametitle{Data Normalization}
-    \begin{itemize}
-        \item{Unrolling}
-        \item{Normalizing}
-        % (formula) x - mean / xmax - mmin
-        \item{Graphs of normal and normalized features}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Unrolling}
+            % (formula) x - mean / xmax - mmin
+        \end{itemize}
+        \begin{table}[h!]
+          \begin{center}
+            \caption{Sample of unrolled data}
+            \label{unrolled_sample}
+            \resizebox{0.6\linewidth}{!}{
+              \pgfplotstabletypeset[
+                every head row/.style={after row=\midrule},
+              ]{code/unrolled_sample.csv}
+            }
+          \end{center}
+       \end{table}
+      \column{0.5\linewidth}
+      \begin{itemize}
+          \item{Normalizing}
+          % (formula) x - mean / xmax - xmin
+      \end{itemize}
+      \begin{table}[h!]
+        \begin{center}
+          \caption{Sample of normalized data}
+          \label{normalized_sample}
+          \resizebox{0.6\linewidth}{!}{
+            \pgfplotstabletypeset[
+              every head row/.style={after row=\midrule},
+            ]{code/normalized_sample.csv}
+          }
+        \end{center}
+     \end{table}
+     \end{columns}
 \end{frame}
 
 \begin{frame}
     \frametitle{Building the dataset}
     \begin{itemize}
         \item{Split in training, dev, test}
+        \item{Obtain classes}
         \item{Store normalized data on s3}
         \item{Input function for training}
         \item{Input function for evaluation}
@@ -329,8 +365,36 @@
 \section{Experiments}
 \begin{frame}
     \frametitle{DNN - Binary Classification}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Classes: Passed or Failed}
+            \item{Supervised training}
+            \item{TensorFlow \emph{DNNClassifier}, classes=2}
+            \item{Hyper-parameters:}
+            \begin{itemize}
+              \item{Activation Function: ReLU}
+              \item{Regularization: Sigmoid}
+              \item{Optimizer: Adagrad}
+              \item{Learning rate (initial): 0.05}
+              \item{5 hidden layers, 100 units per layer}
+              \item{Batch Size: 128, Epochs: 500}
+            \end{itemize}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{figure}
+        \begin{center}
+          \includegraphics[width=0.9\textwidth]{diagrams/binary_class_network_diagram.png}
+             \caption{Network Graph - Source: TensorBoard}
+        \end{center}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Binary Classification}
     \begin{itemize}
-        \item{Varying feature selection}
+        \item{Looking for Configurations}
         \item{TBD Graph of accuracy with different features}
     \end{itemize}
 \end{frame}
@@ -339,7 +403,6 @@
     \frametitle{DNN - Binary Classification}
     \begin{itemize}
         \item{Varying data sampling}
-        \item{Looking for Configurations}
         \item{TBD Graph of accuracy with different sampling}
     \end{itemize}
 \end{frame}
@@ -355,8 +418,8 @@
 \begin{frame}
     \frametitle{Binary Classification - Summary}
     \begin{itemize}
-        \item{Topology / Hyperparameters}
-        \item{Loss curve}
+        \item{CPU and Load Avg}
+        \item{Resolution: 1 minute is enough}
     \end{itemize}
 \end{frame}
 
