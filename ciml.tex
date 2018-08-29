@@ -516,6 +516,7 @@
             \item{Resolution: 1 minute is enough}
             \item{High accuracy: \emph{\textbf{0.995}}}
             \item{High auc\_precision\_recall: \emph{\textbf{0.945}}}
+            \item{A trained model might be applicable to similar CI jobs}
         \end{itemize}
       \column{0.6\linewidth}
         \begin{figure}
@@ -737,18 +738,59 @@
 
 \begin{frame}
     \frametitle{Multi Class - Changing test job}
-    \begin{itemize}
-        \item{Train with a CI Job}
-        \item{Evaluating with another CI Job (as well)}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{table}[h!]
+          \begin{center}
+            \label{multi_eval_compare}
+            \resizebox{1\linewidth}{!}{
+              \pgfplotstabletypeset[
+                precision=3,
+                columns/metric/.style={string type},
+                every head row/.style={after row=\midrule},
+                every even row={5}{before row=\rowcolor{mygray}},
+              ]{code/usr_1m-1min-node_provider-eval-compare.csv}
+            }
+          \end{center}
+       \end{table}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Train with "tempest-full"}
+            \item{Evaluating with "tempest-full-py3"}
+            \begin{itemize}
+              \item{Similar setup, uses python3}
+              \item{It does not include swift and swift tests}
+              \item{600 examples evaluation set}
+            \end{itemize}
+            \item{Dataset and training setup:}
+            \begin{itemize}
+              \item{Features: (usr, 1m)}
+              \item{Resolution: 1min}
+              \item{Same hyper-parameters (dnn-3x100)}
+            \end{itemize}
+        \end{itemize}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
     \frametitle{Multi Class - Summary}
-    \begin{itemize}
-        \item{Topology / Hyperparameters}
-        \item{Loss curve}
-    \end{itemize}
+    \begin{columns}
+      \column{0.4\linewidth}
+        \begin{itemize}
+            \item{User CPU and 1min Load Avg}
+            \item{Resolution: 1 minute is enough}
+            \item{Hyperparameters: 3 hidden layers, 100 units each}
+            \item{Reasonable accuracy: \emph{\textbf{0.925}}}
+            \item{A trained model is not applicable to similar CI jobs}
+        \end{itemize}
+      \column{0.6\linewidth}
+        \begin{figure}
+          \begin{center}
+            \includegraphics[width=0.9\textwidth,height=0.5\textheight]{graphs/cpu_1m-1min-dnn3x100-node_provider-loss_curve.png}
+              \caption{Training Loss - usr/1m, 1min, dnn3x100 - Source: TensorBoard}
+          \end{center}
+        \end{figure}
+      \end{columns}
 \end{frame}
 
 \section{Conclusions}
