@@ -563,12 +563,23 @@
 
 \begin{frame}
     \frametitle{DNN - Multi Class}
-      \begin{itemize}
-        \item{Features: (usr, 1m)}
-        \item{Resolution: 1min}
-        \item{Accuracy achieved: \emph{\textbf{0.668}}}
-        \item{Not good!}
-      \end{itemize}
+    \begin{columns}
+      \column{0.4\linewidth}
+        \begin{itemize}
+          \item{Features: (usr, 1m)}
+          \item{Resolution: 1min}
+          \item{Loss converges, but...}
+          \item{Evaluation accuracy achieved: \emph{\textbf{0.668}}}
+          \item{Not good!}
+        \end{itemize}
+      \column{0.6\linewidth}
+        \begin{figure}
+          \begin{center}
+            \includegraphics[width=0.9\textwidth,height=0.5\textheight]{graphs/cpu_1m-1min-node_provider_all_loss_curve.png}
+              \caption{Training Loss - usr/1m, 1min - Source: TensorBoard}
+          \end{center}
+        \end{figure}
+      \end{columns}
 \end{frame}
 
 \begin{frame}
@@ -676,23 +687,23 @@
                 \item{New number of classes is \textbf{6}}
             \end{itemize}
             \item{Experiments:}
-            \begin{itemize}
-              \item{x-axis: units and hidden layers}
-              \item{Features: (\textbf{usr}, \textbf{1m})}
-              \item{Resolution: \textbf{1min}}
+              \begin{itemize}
+                \item{Train with different feature sets}
+                \item{Train with different resolutions}
+                \item{Source: TensorFlow evaluation}
             \end{itemize}
-            \item{Some improvement!}
-            \item{Winner: 3x100. Accuracy: \emph{\textbf{0.925}}}
+            \item{Significant improvement!}
+            \item{Best accuracy achieved: \emph{\textbf{0.902}}}
         \end{itemize}
       \column{0.5\linewidth}
         \begin{center}
         \begin{figure}
-          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_topology-node_provider.png}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_feature-compare-classes.png}
         \end{figure}
         \begin{figure}
-          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_topology-node_provider.png}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_sampling-compare-classes.png}
         \end{figure}
-      \end{center}
+        \end{center}
   \end{columns}
 \end{frame}
 
@@ -704,23 +715,23 @@
             \item{Tuning network topology}
             \item{Experiments:}
             \begin{itemize}
-              \item{Train with different feature sets}
-              \item{Train with different resolutions}
-              \item{Source: TensorFlow evaluation}
+              \item{x-axis: units and hidden layers}
+              \item{Features: (\textbf{usr}, \textbf{1m})}
+              \item{Resolution: \textbf{1min}}
             \end{itemize}
-            \item{Significant improvement!}
-            \item{Best accuracy achieved: \emph{\textbf{0.902}}}
+            \item{Some improvement}
+            \item{Winner: 3x100. Accuracy: \emph{\textbf{0.925}}}
             \item{What does that mean?}
         \end{itemize}
       \column{0.5\linewidth}
         \begin{center}
         \begin{figure}
-          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_feature-compare-classes.png}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_topology-node_provider.png}
         \end{figure}
         \begin{figure}
-          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_sampling-compare-classes.png}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_topology-node_provider.png}
         \end{figure}
-      \end{center}
+        \end{center}
   \end{columns}
 \end{frame}
 
