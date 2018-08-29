@@ -11,7 +11,7 @@
 NETWORK=${NETWORK:-100/100/100/100/100}
 NETWORK_NAME=${NETWORK_NAME:-"dnn-100x5"}
 BATCH=128
-EPOCHS=500
+EPOCHS=${EPOCHS:-500}
 DATA_PATH=${DATA_PATH:-/git/github.com/mtreinish/ciml/data}
 TARGET_DATA_PATH=${TARGET_DATA_PATH:-/git/github.com/mtreinish/ciml/data}
 SLICE=${SLICE:-":2000"}

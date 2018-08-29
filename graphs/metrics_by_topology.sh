@@ -9,7 +9,7 @@
 # Call with --force to force recreating datasets and experiments
 
 BATCH=128
-EPOCHS=500
+EPOCHS=${EPOCHS:-500}
 DATA_PATH=${DATA_PATH:-/git/github.com/mtreinish/ciml/data}
 TARGET_DATA_PATH=${TARGET_DATA_PATH:-/git/github.com/mtreinish/ciml/data}
 SAMPLING=1min
@@ -69,7 +69,7 @@ for network in "${!NETWORK_NAMES[@]}"; do
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \
   --output accuracy_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "1 - Accuracy with different network topologies"
+  --title "(1 - Accuracy) with different network topologies"
 ciml-plot-data $DAL_PARAMS -k loss \
   --output loss_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
   --title "Loss with different network topologies"

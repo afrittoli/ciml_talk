@@ -11,7 +11,7 @@
 NETWORK=${NETWORK:-100/100/100/100/100}
 NETWORK_NAME=${NETWORK_NAME:-"dnn-100x5"}
 BATCH=128
-EPOCHS=500
+EPOCHS=${EPOCHS:-500}
 DATA_PATH=${DATA_PATH:-/git/github.com/mtreinish/ciml/data}
 TARGET_DATA_PATH=${TARGET_DATA_PATH:-/git/github.com/mtreinish/ciml/data}
 SAMPLING=1min
@@ -64,7 +64,7 @@ for feature_regex in ${FEATURES}; do
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \
   --output accuracy_by_feature-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "1 - Accuracy with different features"
+  --title "(1 - Accuracy) with different features"
 ciml-plot-data $DAL_PARAMS -k loss \
   --output loss_by_feature-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
   --title "Loss with different features"

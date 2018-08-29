@@ -20,16 +20,20 @@
 \newcommand\RBox[1]{%
   \tikz\node[draw,rounded corners,align=center,] {#1};%
 }
+\newcommand{\light}[1]{\textcolor{gray}{#1}}
 \usepackage{hyperref}
 %\usecolortheme{buzz}
 %\usecolortheme{wolverine}
 %\usetheme{Boadilla}
 \usepackage[T1]{fontenc}
 \usepackage{animate}
+\usepackage{pgfplotstable}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\pgfplotstableset{col sep=comma, header=has colnames}
 
 \lstset{ %
   backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
@@ -179,12 +183,12 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Training Workflow}
+    \frametitle{Experiment Workflow}
     \begin{columns}
       \column{0.4\linewidth}
         \begin{itemize}
-            \item{Visualize data}
-            \item{Define a dataset}
+            \item{\textbf{Visualize data}}
+            \item{\textbf{Define a dataset}}
             \item{Define an experiment}
             \item{Run the training}
             \item{Collect results}
@@ -195,45 +199,111 @@
             \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_dataset.sh}
           \end{figure}
           \begin{figure}
+            \includegraphics[width=1\textwidth]{diagrams/build-dataset.png}
+            \caption{Dataset preparation diagram}
+          \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment Workflow}
+    \begin{columns}
+      \column{0.4\linewidth}
+        \begin{itemize}
+            \item{Visualize data}
+            \item{Define a dataset}
+            \item{\textbf{Define an experiment}}
+            \item{\textbf{Run the training}}
+            \item{\textbf{Collect results}}
+            \item{Visualize data}
+        \end{itemize}
+        \column{0.6\linewidth}
+          \begin{figure}
             \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_experiment.sh}
+          \end{figure}
+          \begin{figure}
+            \lstinputlisting[basicstyle=\tiny,language=bash]{code/run_training.sh}
           \end{figure}
     \end{columns}
 \end{frame}
 
 \begin{frame}
     \frametitle{Training Infrastructure}
-    \begin{itemize}
-      \item{Sharing data, experiments and results}
-      \item{Helm deployment}
-      \item{Ffdl <- s3 input}
-      \item{Experiment / dataset in Cloudant / via OpenWhisk API}
-      \item{TBD build a diagram for the training pipeline}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{figure}
+        \begin{center}
+          \includegraphics[width=1\textwidth]{diagrams/FfDL-Diagram.png}
+             \caption{FfDL Architecture - Source: \href{https://developer.ibm.com/code/2018/03/20/democratize-ai-with-fabric-for-deep-learning/l}{https://developer.ibm.com/code/}}
+        \end{center}
+        \end{figure}
+      \column{0.5\linewidth}
+        \begin{itemize}
+          \item{TensorFlow Estimator API}
+          \item{CIML wrapper}
+          \item{ML framework interchangable}
+          \item{Training Options:}
+          \begin{itemize}
+            \item{Run on a local machine}
+            \item{Helm deploy CIML, run in containers}
+            \item{\light{Submit training jobs to Ffdl}}
+            \item{\light{Kubeflow}}
+          \end{itemize}
+        \end{itemize}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Infrastructure for prediction}
-    \begin{itemize}
-        \item{MQTT - near real time}
-        \item{Trained model on storage}
-        \item{Prediction in storage}
-        \item{OpenWhisk trigger -> comment on Gerrit/Github}
-        \item{Build a diagram for the NRT pipeline}
-    \end{itemize}
+    \frametitle{Prediction}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Event driven: near real time}
+            \item{No request to serve the prediction to}
+            \item{MQTT Trigger from the CI system}
+            \item{CIML produces the prediction}
+            \item{Trusted Source: Continuous Training}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{itemize}
+          \item{CIML kubernetes app components:}
+          \begin{itemize}
+            \item{MQTT Client receives events}
+            \item{Data module fetches and prepares data}
+            \item{TensorFlow wrapper issues the prediction}
+            \item{Example: comment back on Gerrit/Github}
+          \end{itemize}
+        \end{itemize}
+    \end{columns}
 \end{frame}
 
 \section{Data}
 \begin{frame}
     \frametitle{Data Selection}
-    \begin{itemize}
-        \item{What is dstat data}
-        \item{Experiment Reproducibility}
-        \item{Dataset selection}
+    \begin{columns}
+      \column{0.5\linewidth}
         \begin{itemize}
-          \item{Feature selection}
-          \item{Sampling selection}
+            \item{What is dstat data}
+            \item{Experiment Reproducibility}
+            \item{Dataset selection}
+            \begin{itemize}
+              \item{Dstat Feature selection}
+              \item{Data resolution (down-sampling)}
+            \end{itemize}
         \end{itemize}
-    \end{itemize}
+      \column{0.5\linewidth}
+      \begin{table}[h!]
+        \begin{center}
+          \caption{Sample of dstat data}
+          \label{dstat_sample}
+          \resizebox{0.7\linewidth}{!}{
+            \pgfplotstabletypeset[
+              columns/time/.style={string type},
+            ]{code/dstat_sample.csv}
+          }
+        \end{center}
+     \end{table}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
