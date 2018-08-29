@@ -286,10 +286,10 @@
       \column{0.5\linewidth}
         \begin{itemize}
             \item{What is dstat data}
-            \item{Experiment Reproducibility}
+            \item{Experiment reproducibility}
             \item{Dataset selection}
             \begin{itemize}
-              \item{Dstat Feature selection}
+              \item{Dstat feature selection}
               \item{Data resolution (down-sampling)}
             \end{itemize}
         \end{itemize}
@@ -389,8 +389,8 @@
             \end{itemize}
             \item{Hyper-parameters:}
             \begin{itemize}
-              \item{Activation Function: ReLU}
-              \item{Regularization: Sigmoid}
+              \item{Activation function: ReLU}
+              \item{Output layer: Sigmoid}
               \item{Optimizer: Adagrad}
               \item{Learning rate (initial): 0.05}
               \item{5 hidden layers, 100 units per layer}
@@ -529,22 +529,97 @@
 
 \begin{frame}
     \frametitle{DNN - Multi Class}
-    \begin{itemize}
-        \item{Detecting the Cloud Provider}
-        \item{Growing back number of features}
-        \item{Reducing down-sampling}
-    \end{itemize}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Classes: Hosting Cloud Provider}
+            \item{Supervised training}
+            \item{TensorFlow \emph{DNNClassifier}, classes=\textbf{9}}
+            \item{Dataset:}
+            \begin{itemize}
+              \item{CI Job "tempest-full"}
+              \item{Gate pipeline only}
+              \item{2000 examples, 1400 training, 600 test}
+            \end{itemize}
+            \item{Hyper-parameters:}
+            \begin{itemize}
+              \item{Activation function: ReLU}
+              \item{Output layer: Sigmoid}
+              \item{Optimizer: Adagrad}
+              \item{Learning rate (initial): 0.05}
+              \item{5 hidden layers, 100 units per layer}
+              \item{Batch Size: 128, Epochs: 500}
+            \end{itemize}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{figure}
+        \begin{center}
+          \includegraphics[width=0.9\textwidth]{diagrams/binary_class_network_diagram.png}
+             \caption{Network Graph - Source: TensorBoard}
+        \end{center}
+        \end{figure}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
     \frametitle{DNN - Multi Class}
+    \begin{center}
+      \begin{itemize}
+        \item{Features: (usr, 1m)}
+        \item{Resolution: 1min}
+        \item{Accuracy achieved: \emph{\textbf{0.995}}}
+      \end{itemize}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Multi Class - Growing back number of features}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Selecting the best feature set}
+            \item{Primary metric: accuracy}
+            \item{Aim for lower loss, caveat: overfitting}
+            \item{Key:}
+            \begin{itemize}
+              \item{\textbf{usr}: User CPU}
+              \item{\textbf{used}: Used Memory}
+              \item{\textbf{1m}: System Load - 1min Average}
+              \item{Data Resolution: \textbf{1min}}
+              \item{Source: TensorFlow evaluation output}
+            \end{itemize}
+            \item{Winner: (\textbf{usr}, \textbf{1m}) tuple}
+            \item{Accuracy achieved: \emph{\textbf{0.995}}}
+            \item{3 mistakes on a 600 test set}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/accuracy_by_feature-status.png}
+        \end{figure}
+        \begin{figure}
+          \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_feature-status.png}
+        \end{figure}
+      \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Multi Class - Increasing Resolution}
     \begin{itemize}
         \item{Playing with the network topology}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{DNN - Multi Class}
+    \frametitle{Multi Class - Playing with the network topology}
+    \begin{itemize}
+        \item{Playing with the network topology}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Multi Class - Reducing the number of classes}
     \begin{itemize}
         \item{Reducing the number of classes}
         \item{What does that mean}
@@ -553,7 +628,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Changing test job}
+    \frametitle{Multi Class - Changing test job}
     \begin{itemize}
         \item{Train with a CI Job}
         \item{Evaluating with another CI Job (as well)}
@@ -572,7 +647,7 @@
 \begin{frame}
   \frametitle{Conclusions}
   \begin{itemize}
-      \item{Summary on DNN single class}
+      \item{Summary on DNN binary classification}
       \item{Summary on DNN multi class}
       \item{Collect data}
       \item{Know your data}
@@ -588,7 +663,6 @@
       \item{Making our life easier}
       \item{Integrate with real life CI system}
       \item{Explore job portability}
-      \item{Tune optimization for quick convergence}
   \end{itemize}
 \end{frame}
 
