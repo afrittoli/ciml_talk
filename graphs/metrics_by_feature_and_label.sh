@@ -21,6 +21,16 @@ FILENAME_SUFFIX=${FILENAME_SUFFIX:-""}
 FEATURES="(usr|used|1m) (usr|1m) (usr|used) (usr) (used) (1m)"
 CLASS_LABELS="node_provider_all node_provider"
 
+# Setup the experiment
+EXPERIMENT=${NETWORK_NAME}-${EPOCHS}epochs-bs${BATCH}
+echo "=== Setting up experiment $EXPERIMENT"
+ciml-setup-experiment --experiment $EXPERIMENT \
+  --estimator tf.estimator.DNNClassifier \
+  --hidden-layers $NETWORK \
+  --steps $(( 2000 / BATCH * EPOCHS )) \
+  --batch-size $BATCH \
+  --epochs ${EPOCHS} \
+  --data-path $TARGET_DATA_PATH $@
 
 for feature_regex in ${FEATURES}; do
   for class_label in ${CLASS_LABELS}; do
@@ -36,23 +46,10 @@ for feature_regex in ${FEATURES}; do
       --tdt-split 7 0 3 \
       --data-path $DATA_PATH \
       --target-data-path $TARGET_DATA_PATH $@
-    # Setup the experiment
-    EXPERIMENT=${NETWORK_NAME}-${EPOCHS}epochs-bs${BATCH}
-    echo "=== Setting up experiment $EXPERIMENT"
-    ciml-setup-experiment --experiment $EXPERIMENT \
-      --dataset $DATASET \
-      --estimator tf.estimator.DNNClassifier \
-      --hidden-layers $NETWORK \
-      --steps $(( 2000 / BATCH * EPOCHS )) \
-      --batch-size $BATCH \
-      --epochs ${EPOCHS} \
-      --data-path $TARGET_DATA_PATH $@
-    # Do the training if this is a new experiment
-    if [[ "$?" == 0 ]]; then
-      echo "=== Training $EXPERIMENT against $DATASET"
-      ciml-train-model --dataset $DATASET --experiment $EXPERIMENT \
-        --data-path $TARGET_DATA_PATH
-    fi
+    # Do the training
+    echo "=== Training $EXPERIMENT against $DATASET"
+    ciml-train-model --dataset $DATASET --experiment $EXPERIMENT \
+      --data-path $TARGET_DATA_PATH
   done
 done
 
