@@ -25,20 +25,20 @@ NETWORK_NAMES["100/100/100/100/100"]=dnn-5x100
 NETWORK_NAMES["500/500/500/500/500"]=dnn-5x500
 NETWORK_NAMES["100/100/100/100/100/100/100/100/100/100"]=dnn-10x100
 
+# Build the dataset
+DATASET=$(echo $FEATURE | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${SAMPLING}-${CLASS_LABEL}
+echo "=== Setting up dataset $DATASET"
+ciml-build-dataset --dataset $DATASET \
+  --build-name tempest-full \
+  --slicer $SLICE \
+  --sample-interval $SAMPLING \
+  --features-regex "${FEATURE}" \
+  --class-label $CLASS_LABEL \
+  --tdt-split 7 0 3 \
+  --data-path $DATA_PATH \
+  --target-data-path $TARGET_DATA_PATH $@
 
 for network in "${!NETWORK_NAMES[@]}"; do
-  DATASET=$(echo $FEATURE | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${SAMPLING}-${CLASS_LABEL}
-  echo "=== Setting up dataset $DATASET"
-  # Build the dataset
-  ciml-build-dataset --dataset $DATASET \
-    --build-name tempest-full \
-    --slicer $SLICE \
-    --sample-interval $SAMPLING \
-    --features-regex "${FEATURE}" \
-    --class-label $CLASS_LABEL \
-    --tdt-split 7 0 3 \
-    --data-path $DATA_PATH \
-    --target-data-path $TARGET_DATA_PATH $@
   # Setup the experiment
   EXPERIMENT=${NETWORK_NAMES[$network]}-${EPOCHS}epochs-bs${BATCH}
   echo "=== Setting up experiment $EXPERIMENT"
@@ -50,12 +50,9 @@ for network in "${!NETWORK_NAMES[@]}"; do
     --batch-size $BATCH \
     --epochs ${EPOCHS} \
     --data-path $TARGET_DATA_PATH $@
-  # Do the training if this is a new experiment
-  if [[ "$?" == 0 ]]; then
-    echo "=== Training $EXPERIMENT against $DATASET"
-    ciml-train-model --dataset $DATASET --experiment $EXPERIMENT \
-      --data-path $TARGET_DATA_PATH
-  fi
+  # Do the training
+  ciml-train-model --dataset $DATASET --experiment $EXPERIMENT \
+    --data-path $TARGET_DATA_PATH
 done
 
 DAL_PARAMS=""
