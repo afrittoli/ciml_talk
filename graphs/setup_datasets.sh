@@ -23,19 +23,19 @@ function create_datasets() {
     for sampling in ${SAMPLINGS}; do
       for class_label in ${CLASS_LABELS}; do
         for build_name in ${BUILD_NAMES}; do
-        DATASET=$(echo $feature_regex | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${sampling}-${class_label}
-        echo "=== Setting up dataset $DATASET"
-          # Build the dataset
-          ciml-build-dataset --dataset $DATASET \
-            --build-name $build_name \
-            --slicer $SLICE \
-            --sample-interval "$sampling" \
-            --features-regex "$FEATURES" \
-            --class-label $class_label \
-            --tdt-split 7 0 3 \
-            --data-path $DATA_PATH \
-            --target-data-path $TARGET_DATA_PATH
-            --s3-url $S3_AUTH_URL $@
+          DATASET=$(echo $feature_regex | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${sampling}-${class_label}
+          echo "=== Setting up dataset $DATASET"
+            # Build the dataset
+            ciml-build-dataset --dataset $DATASET \
+              --build-name $build_name \
+              --slicer $SLICE \
+              --sample-interval "$sampling" \
+              --features-regex "$FEATURES" \
+              --class-label $class_label \
+              --tdt-split 7 0 3 \
+              --data-path $DATA_PATH \
+              --target-data-path $TARGET_DATA_PATH \
+              --s3-url $S3_AUTH_URL $@
         done
       done
     done
@@ -45,13 +45,13 @@ function create_datasets() {
 # Dataset by feature/label
 FEATURES="(usr|used|1m) (usr|1m) (usr|used) (usr) (used) (1m)"
 CLASS_LABELS="node_provider_all node_provider"
-SAMPLING=1min
+SAMPLINGS="1min"
 BUILD_NAMES="tempest-full tempest-full-py3"
-create_datasets()
+create_datasets
 
 # Dataset by sampling/label
 FEATURES="(usr|1m)"
 CLASS_LABELS="node_provider_all node_provider"
-SAMPLING="1s 10s 30s 1min 5min 10min"
+SAMPLINGS="1s 10s 30s 1min 5min 10min"
 BUILD_NAMES="tempest-full tempest-full-py3"
-create_datasets()
+create_datasets
