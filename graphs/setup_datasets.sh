@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Setup/refresh all datasets required for various experiments
 # It requires CIML to be installed, and aws profile "ibmcloud"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Run combinations of datasets and experiments via FfDL.
 # Datasets are defined in CIML_DATASETS
@@ -19,6 +19,7 @@ EXPERIMENTS=${CIML_EXPERIMENTS:-}
 CIML_FFDL=${CIML_FFDL:-/git/github.com/mtreinish/ciml/ffdl_train.sh}
 EXPERIMENTS_LOG=${EXPERIMENTS_LOG:-"ffdl_experiments.csv"}
 ONLY_WAIT=${ONLY_WAIT:-"false"}
+ONLY_NEW=${ONLY_NEW:-"true"}
 
 declare -A FFDL_EXPERIMENTS
 
@@ -33,10 +34,14 @@ else
   # Schedule all the experiments in FfDL
   for dataset in $DATASETS; do
     for experiment in $EXPERIMENTS; do
+      if [[ "$ONLY_NEW"  == "true" ]]; then
+        is_new=$(grep "$dataset;$experiment" -c $EXPERIMENTS_LOG)
+        [[ $is_new -ge 1 ]] && continue
+      fi
       model_id=$($CIML_FFDL $dataset $experiment | awk '/Model ID/{ print $3 }')
       echo "Submit job $model_id for dataset $dataset with experiment $experiment"
       FFDL_EXPERIMENTS[$model_id]="$dataset,$experiment"
-      echo "$(date +'%F %R');$dataset;$experiment;$model_id" > $EXPERIMENTS_LOG
+      echo "$(date +'%F %R');$dataset;$experiment;$model_id" >> $EXPERIMENTS_LOG
     done
   done
 fi
