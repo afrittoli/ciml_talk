@@ -25,13 +25,15 @@ declare -A FFDL_EXPERIMENTS
 for dataset in $DATASETS; do
   for experiment in $EXPERIMENTS; do
     model_id=$($CIML_FFDL $dataset $experiment | awk '/Model ID/{ print $3 }')
+    echo "Submit job $model_id for dataset $dataset with experiment $experiment"
     FFDL_EXPERIMENTS[$model_id]="$dataset,$experiment"
-    echo "$(date +\"%F %R\");$dataset;$experiment;$model_id" > $EXPERIMENTS_LOG
+    echo "$(date +'%F %R');$dataset;$experiment;$model_id" > $EXPERIMENTS_LOG
   done
 done
 
 # Wait until experiments are complete
-while [[ ${#MYMAP[@]} != 0 ]]; do
+while [[ ${#FFDL_EXPERIMENTS[@]} != 0 ]]; do
+  echo "$(date +'%F %R') Waiting for all experiments to complete..."
   for model_id in ${!FFDL_EXPERIMENTS[@]}; do
     model_json=$(ffdl show $model_id --json | egrep -v '^Getting model')
     # If the model json is not JSON, the API call failed
