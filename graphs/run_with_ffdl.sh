@@ -18,18 +18,28 @@ DATASETS=${CIML_DATASETS:-}
 EXPERIMENTS=${CIML_EXPERIMENTS:-}
 CIML_FFDL=${CIML_FFDL:-/git/github.com/mtreinish/ciml/ffdl_train.sh}
 EXPERIMENTS_LOG=${EXPERIMENTS_LOG:-"ffdl_experiments.csv"}
+ONLY_WAIT=${ONLY_WAIT:-"false"}
 
 declare -A FFDL_EXPERIMENTS
 
-# Schedule all the experiments in FfDL
-for dataset in $DATASETS; do
-  for experiment in $EXPERIMENTS; do
-    model_id=$($CIML_FFDL $dataset $experiment | awk '/Model ID/{ print $3 }')
-    echo "Submit job $model_id for dataset $dataset with experiment $experiment"
-    FFDL_EXPERIMENTS[$model_id]="$dataset,$experiment"
-    echo "$(date +'%F %R');$dataset;$experiment;$model_id" > $EXPERIMENTS_LOG
+if [[ "$ONLY_WAIT" == "true" ]]; then
+  # Load all experiments in a declarative array
+  for experiment in $(cat $EXPERIMENTS_LOG); do
+    dataset=$(echo $experiment | cut -d';' -f2)
+    experiment=$(echo $experiment | cut -d';' -f3)
+    FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $experiment | cut -d';' -f4)
   done
-done
+else
+  # Schedule all the experiments in FfDL
+  for dataset in $DATASETS; do
+    for experiment in $EXPERIMENTS; do
+      model_id=$($CIML_FFDL $dataset $experiment | awk '/Model ID/{ print $3 }')
+      echo "Submit job $model_id for dataset $dataset with experiment $experiment"
+      FFDL_EXPERIMENTS[$model_id]="$dataset,$experiment"
+      echo "$(date +'%F %R');$dataset;$experiment;$model_id" > $EXPERIMENTS_LOG
+    done
+  done
+fi
 
 # Wait until experiments are complete
 while [[ ${#FFDL_EXPERIMENTS[@]} != 0 ]]; do
@@ -37,8 +47,8 @@ while [[ ${#FFDL_EXPERIMENTS[@]} != 0 ]]; do
   for model_id in ${!FFDL_EXPERIMENTS[@]}; do
     model_json=$(ffdl show $model_id --json | egrep -v '^Getting model')
     # If the model json is not JSON, the API call failed
-    echo $model_json | jq &> /dev/null || continue
-    job_status = $(echo $model_json | jq .Payload.training.training_status.status)
+    echo $model_json | jq . &> /dev/null || continue
+    job_status=$(echo $model_json | jq -r .Payload.training.training_status.status)
     if [[ "$job_status" == "FAILED" ]]; then
       echo "$model_id FAILED"
       unset FFDL_EXPERIMENTS[$model_id]
@@ -47,6 +57,7 @@ while [[ ${#FFDL_EXPERIMENTS[@]} != 0 ]]; do
       unset FFDL_EXPERIMENTS[$model_id]
     fi
   done
+  echo "# experiments: ${#FFDL_EXPERIMENTS[@]}"
   # Wait a minute before next loop
   sleep 60
 done
