@@ -7,12 +7,9 @@
 
 # Call with --force to force recreating datasets
 
-BATCH=128
-EPOCHS=${EPOCHS:-500}
 DATA_PATH=${DATA_PATH:-/git/github.com/mtreinish/ciml/data}
 TARGET_DATA_PATH=${TARGET_DATA_PATH:-/git/github.com/mtreinish/ciml/data}
 SLICE=${SLICE:-":2000"}
-FILENAME_SUFFIX=${FILENAME_SUFFIX:-""}
 S3_AUTH_URL=${S3_AUTH_URL:-https://s3.eu-geo.objectstorage.softlayer.net}
 AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
 AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
@@ -24,6 +21,9 @@ function create_datasets() {
       for class_label in ${CLASS_LABELS}; do
         for build_name in ${BUILD_NAMES}; do
           DATASET=$(echo $feature_regex | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${sampling}-${class_label}
+          if [[ "$build_name" == "tempest-full-py3" ]]; then
+            DATASET="${DATASET}-py3"
+          fi
           echo "=== Setting up dataset $DATASET"
             # Build the dataset
             ciml-build-dataset --dataset $DATASET \

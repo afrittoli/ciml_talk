@@ -23,12 +23,12 @@ EPOCHS="100 500 1000 5000"
 for network in "${!NETWORK_NAMES[@]}"; do
   for epochs in ${EPOCHS}; do
     # Setup the experiment
-    EXPERIMENT=${network}-${epochs}epochs-bs${BATCH}
+    EXPERIMENT=${NETWORK_NAMES[$network]}-${epochs}epochs-bs${BATCH}
     echo "=== Setting up experiment $EXPERIMENT"
     ciml-setup-experiment --experiment $EXPERIMENT \
       --estimator tf.estimator.DNNClassifier \
       --hidden-layers $network \
-      --steps $(( 2500 / BATCH * EPOCHS )) \
+      --steps $(( 2500 / BATCH * epochs )) \
       --batch-size $BATCH \
       --epochs ${epochs} \
       --data-path $TARGET_DATA_PATH $@
