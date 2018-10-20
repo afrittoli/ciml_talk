@@ -34,6 +34,7 @@
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{osseu}{rgb}{0.365,0.596,0.325}
 
 \pgfplotstableset{col sep=comma, header=has colnames}
 
@@ -105,11 +106,11 @@
 \setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{background_title.png}}
 \setbeamertemplate{footline}{}
 \begin{frame}[noframenumbering]
-    \setbeamercolor{titlelike}{fg=white}
+    \setbeamercolor{title}{fg=white,bg=osseu}
     \setbeamercolor{structure}{fg=white}
     \setbeamercolor{normal text}{fg=white}
     \hypersetup{colorlinks,urlcolor=white}
-    \setbeamercolor{author}{fg=white}
+    \setbeamercolor{author}{fg=white,bg=osseu}
     \setbeamercolor{date}{fg=white}
     \setbeamercolor{background}{bg=openstack}
     \titlepage{}
