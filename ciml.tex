@@ -2,9 +2,10 @@
 \usetheme{boxes}
 \setbeamertemplate{navigation symbols}{}
 \definecolor{ibm}{RGB}{70,107,176}
-\setbeamercolor{titlelike}{fg=ibm}
-\setbeamercolor{structure}{fg=ibm}
-\hypersetup{colorlinks,urlcolor=ibm}
+\definecolor{osseu}{RGB}{26,107,56}
+\setbeamercolor{titlelike}{fg=osseu}
+\setbeamercolor{structure}{fg=osseu}
+\hypersetup{colorlinks,urlcolor=osseu}
 \setbeamertemplate{footline}[frame number]
 % Inserting graphics
 \usepackage{graphicx}
@@ -34,7 +35,6 @@
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
-\definecolor{osseu}{rgb}{0.365,0.596,0.325}
 
 \pgfplotstableset{col sep=comma, header=has colnames}
 
@@ -43,7 +43,7 @@
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
   breaklines=true,                 % sets automatic line breaking
   captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{ibm},        % comment style
+  commentstyle=\color{osseu},        % comment style
   extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
   keywordstyle=\color{blue},       % keyword style
@@ -54,7 +54,7 @@
   showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
   showstringspaces=false,          % underline spaces within strings only
   showtabs=false,                  % show tabs within strings adding particular underscores
-  stringstyle=\color{ibm},         % string literal style
+  stringstyle=\color{osseu},         % string literal style
 }
 
 \setbeamerfont{caption}{series=\normalfont,size=\fontsize{8}{10}}
@@ -123,14 +123,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
 \setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{background_title.png}}
 \setbeamertemplate{footline}{}
 \begin{frame}[noframenumbering]
-    \setbeamercolor{title}{fg=white,bg=osseu}
-
-    \setbeamercolor{structure}{fg=white}
-    \setbeamercolor{normal text}{fg=white}
     \hypersetup{colorlinks,urlcolor=white}
-    \setbeamercolor{author}{fg=white, bg=osseu}
-    \setbeamercolor{date}{fg=white}
-    \setbeamercolor{background}{bg=openstack}
     \maketitle
 \end{frame}
 }
