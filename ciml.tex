@@ -102,20 +102,36 @@
 
 \begin{document}
 
+\setbeamertemplate{title page}{%
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=east]
+    at ([yshift=-50pt,xshift=-30pt]current page.north east) (title)
+  {\parbox[t]{.6\paperwidth}{\raggedleft%
+    \usebeamerfont{author}\textcolor{white}{\Huge \inserttitle}}};
+\node[anchor=east]
+  at ([yshift=-25pt,xshift=-20pt]current page.east) (author)
+  {\parbox[t]{\textwidth}{\raggedleft%
+ \usebeamerfont{author}\textcolor{white}{\insertauthor}}};
+\node[anchor=south west]
+at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
+  {\parbox[t]{\textwidth}{\raggedleft
+\usebeamerfont{colorlinks}\textcolor{white}{\href{https://github.com/afrittoli/ciml\_talk}{https://github.com/afrittoli/ciml\_talk}}}};
+\end{tikzpicture}
+}
+
 {%
 \setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{background_title.png}}
 \setbeamertemplate{footline}{}
 \begin{frame}[noframenumbering]
     \setbeamercolor{title}{fg=white,bg=osseu}
+
     \setbeamercolor{structure}{fg=white}
     \setbeamercolor{normal text}{fg=white}
     \hypersetup{colorlinks,urlcolor=white}
-    \setbeamercolor{author}{fg=white,bg=osseu}
+    \setbeamercolor{author}{fg=white, bg=osseu}
     \setbeamercolor{date}{fg=white}
     \setbeamercolor{background}{bg=openstack}
-    \titlepage{}
-    \centering
-    \href{https://github.com/afrittoli/ciml\_talk}{https://github.com/afrittoli/ciml\_talk}
+    \maketitle
 \end{frame}
 }
 
