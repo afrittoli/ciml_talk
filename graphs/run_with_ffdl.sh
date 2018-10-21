@@ -20,6 +20,7 @@ CIML_FFDL=${CIML_FFDL:-/git/github.com/mtreinish/ciml/ffdl_train.sh}
 EXPERIMENTS_LOG=${EXPERIMENTS_LOG:-"ffdl_experiments.csv"}
 ONLY_WAIT=${ONLY_WAIT:-"false"}
 ONLY_NEW=${ONLY_NEW:-"true"}
+MAX_EXPERIMENTS=${MAX_EXPERIMENTS:-10}
 
 declare -A FFDL_EXPERIMENTS
 
@@ -31,6 +32,7 @@ if [[ "$ONLY_WAIT" == "true" ]]; then
     FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $experiment | cut -d';' -f4)
   done
 else
+  counter=0
   # Schedule all the experiments in FfDL
   for dataset in $DATASETS; do
     for experiment in $EXPERIMENTS; do
@@ -38,7 +40,11 @@ else
         is_new=$(grep "$dataset;$experiment" -c $EXPERIMENTS_LOG)
         [[ $is_new -ge 1 ]] && continue
       fi
+      if [[ $counter -gt $MAX_EXPERIMENTS ]]; then
+        break 2
+      fi
       model_id=$($CIML_FFDL $dataset $experiment | awk '/Model ID/{ print $3 }')
+      counter=$(( counter + 1 ))
       echo "Submit job $model_id for dataset $dataset with experiment $experiment"
       FFDL_EXPERIMENTS[$model_id]="$dataset,$experiment"
       echo "$(date +'%F %R');$dataset;$experiment;$model_id" >> $EXPERIMENTS_LOG
