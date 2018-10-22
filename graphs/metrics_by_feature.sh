@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Plot the results of the experiments
 TARGET_DATA_PATH=${TARGET_DATA_PATH:-/git/github.com/mtreinish/ciml/data}
@@ -22,7 +22,7 @@ done
 # Plot by feature
 FEATURES="(usr|used|1m) (usr|1m) (usr|used) (usr) (used) (1m)"
 CLASS_LABEL=${CLASS_LABEL:-status}
-SAMPLINGS="1min"
+SAMPLING="1min"
 BUILD_NAMES="tempest-full"
 EPOCHS="500"
 NETWORK=${NETWORK:-100/100/100/100/100}
@@ -36,14 +36,17 @@ for feature_regex in ${FEATURES}; do
   LABEL=$(echo $feature_regex | tr "|" "/" | sed -e "s/(//g" -e "s/)//g")
   EXPERIMENT=${NETWORK_NAME}-${EPOCHS}epochs-bs${BATCH}
   MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
-  DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label \"$MODEL_ID/$DATASET\" $EXPERIMENT $LABEL"
+  DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/data/$DATASET $EXPERIMENT $LABEL"
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \
   --output accuracy_by_feature-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "(1 - Accuracy) with different features"
+  --title "(1 - Accuracy) with different features" \
+  --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k loss \
   --output loss_by_feature-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "Loss with different features"
+  --title "Loss with different features" \
+  --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k average_loss \
   --output avg_loss_by_feature-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "Average Loss with different features"
+  --title "Average Loss with different features" \
+  --data-path "$TARGET_DATA_PATH"

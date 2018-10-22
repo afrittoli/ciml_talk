@@ -42,14 +42,17 @@ for network in "${!NETWORK_NAMES[@]}"; do
   LABEL=${NETWORK_NAMES[$network]}
   EXPERIMENT=${NETWORK_NAMES[$network]}-${EPOCHS}epochs-bs${BATCH}
   MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
-  DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label \"$MODEL_ID/$DATASET\" $EXPERIMENT $LABEL"
+  DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/$DATASET $EXPERIMENT $LABEL"
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \
   --output accuracy_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "(1 - Accuracy) with different network topologies"
+  --title "(1 - Accuracy) with different network topologies" \
+  --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k loss \
   --output loss_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "Loss with different network topologies"
+  --title "Loss with different network topologies" \
+  --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k average_loss \
   --output avg_loss_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "Loss with different network topologies"
+  --title "Loss with different network topologies" \
+  --data-path "$TARGET_DATA_PATH"
