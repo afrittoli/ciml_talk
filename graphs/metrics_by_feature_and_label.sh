@@ -19,7 +19,7 @@ for experiment in $(cat $EXPERIMENTS_LOG); do
   FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $experiment | cut -d';' -f4)
 done
 
-# Plot by feature
+# Plot by feature and label
 FEATURES="(usr|used|1m) (usr|1m) (usr|used) (usr) (used) (1m)"
 CLASS_LABELS="node_provider_all node_provider"
 SAMPLING=1min

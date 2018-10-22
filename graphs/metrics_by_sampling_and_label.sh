@@ -1,60 +1,33 @@
 #!/bin/bash
 
-# Run the same experiment on different datasets
-# for several combinations of dstat features
+# Plot the results of the experiments
+TARGET_DATA_PATH=${TARGET_DATA_PATH:-/git/github.com/mtreinish/ciml/data}
+S3_AUTH_URL=${S3_AUTH_URL:-https://s3.eu-geo.objectstorage.softlayer.net}
+AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+DATASETS=${CIML_DATASETS:-}
+EXPERIMENTS=${CIML_EXPERIMENTS:-}
+CIML_FFDL=${CIML_FFDL:-/git/github.com/mtreinish/ciml/ffdl_train.sh}
+EXPERIMENTS_LOG=${EXPERIMENTS_LOG:-"ffdl_experiments.csv"}
+FILENAME_SUFFIX=${FILENAME_SUFFIX:-""}
 
-# It requires CIML to be installed
-# It assumes enough examples are cached already
+# Load all experiments in a declarative array
+declare -A FFDL_EXPERIMENTS
+for experiment in $(cat $EXPERIMENTS_LOG); do
+  dataset=$(echo $experiment | cut -d';' -f2)
+  experiment=$(echo $experiment | cut -d';' -f3)
+  FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $experiment | cut -d';' -f4)
+done
 
-# Call with --force to force recreating datasets and experiments
-
+# Plot by sampling
+FEATURES="(usr|1m)"
+CLASS_LABELS="node_provider_all node_provider"
+SAMPLINGS="10s 30s 1min 5min 10min"
+BUILD_NAMES="tempest-full"
+EPOCHS="500"
 NETWORK=${NETWORK:-100/100/100/100/100}
 NETWORK_NAME=${NETWORK_NAME:-"dnn-100x5"}
 BATCH=128
-EPOCHS=${EPOCHS:-500}
-DATA_PATH=${DATA_PATH:-/git/github.com/mtreinish/ciml/data}
-TARGET_DATA_PATH=${TARGET_DATA_PATH:-/git/github.com/mtreinish/ciml/data}
-SLICE=${SLICE:-":2000"}
-FEATURES="(usr|1m)"
-FILENAME_SUFFIX=${FILENAME_SUFFIX:-""}
-
-SAMPLINGS="10s 30s 1min 5min 10min"
-CLASS_LABELS="node_provider_all node_provider"
-
-
-for sampling in ${SAMPLINGS}; do
-  for class_label in ${CLASS_LABELS}; do
-    DATASET=$(echo $FEATURES | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${sampling}-${class_label}
-    echo "=== Setting up dataset $DATASET"
-    # Build the dataset
-    ciml-build-dataset --dataset $DATASET \
-      --build-name tempest-full \
-      --slicer $SLICE \
-      --sample-interval "$sampling" \
-      --features-regex "$FEATURES" \
-      --class-label $class_label \
-      --tdt-split 7 0 3 \
-      --data-path $DATA_PATH \
-      --target-data-path $TARGET_DATA_PATH $@
-    # Setup the experiment
-    EXPERIMENT=${NETWORK_NAME}-${EPOCHS}epochs-bs${BATCH}
-    echo "=== Setting up experiment $EXPERIMENT"
-    ciml-setup-experiment --experiment $EXPERIMENT \
-      --dataset $DATASET \
-      --estimator tf.estimator.DNNClassifier \
-      --hidden-layers $NETWORK \
-      --steps $(( 2000 / BATCH * EPOCHS )) \
-      --batch-size $BATCH \
-      --epochs ${EPOCHS} \
-      --data-path $TARGET_DATA_PATH $@
-    # Do the training if this is a new experiment
-    if [[ "$?" == 0 ]]; then
-      echo "=== Training $EXPERIMENT against $DATASET"
-      ciml-train-model --dataset $DATASET --experiment $EXPERIMENT \
-        --data-path $TARGET_DATA_PATH
-    fi
-  done
-done
 
 DAL_PARAMS=""
 # Do the data building and plotting
@@ -63,10 +36,11 @@ for sampling in ${SAMPLINGS}; do
     DATASET=$(echo $FEATURES | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${sampling}-${class_label}
     LABEL=$sampling
     EXPERIMENT=${NETWORK_NAME}-${EPOCHS}epochs-bs${BATCH}
+    MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
     if [[ "$class_label" == "node_provider_all" ]]; then
-      DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $DATASET $EXPERIMENT $LABEL"
+      DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label \"$MODEL_ID/$DATASET\" $EXPERIMENT $LABEL"
     else
-      DAL_PARAMS="$DAL_PARAMS --dataset-experiment-comp $DATASET $EXPERIMENT"
+      DAL_PARAMS="$DAL_PARAMS --dataset-experiment-comp \"$MODEL_ID/$DATASET\" $EXPERIMENT"
     fi
   done
 done
