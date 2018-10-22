@@ -22,32 +22,35 @@ done
 # Plot by sampling
 FEATURES="(usr|1m)"
 CLASS_LABEL=${CLASS_LABEL:-status}
-SAMPLINGS="1s 10s 30s 1min 5min 10min"
+SAMPLING=1min
 BUILD_NAMES="tempest-full"
-EPOCHS="500"
-NETWORK=${NETWORK:-100/100/100/100/100}
-NETWORK_NAME=${NETWORK_NAME:-"dnn-5x100"}
+EPOCHS="100 500 1000 5000"
 BATCH=128
+
+declare -A NETWORK_NAMES
+NETWORK_NAMES["100/100/100/100/100"]=dnn-5x100
+NETWORK_NAMES["500/500/500/500/500"]=dnn-5x500
 
 DAL_PARAMS=""
 # Do the data building and plotting
-for sampling in ${SAMPLINGS}; do
-  DATASET=$(echo $FEATURES | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${sampling}-${CLASS_LABEL}
-  LABEL=$sampling
-  EXPERIMENT=${NETWORK_NAME}-${EPOCHS}epochs-bs${BATCH}
-  MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
-  DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/data/$DATASET $EXPERIMENT $LABEL"
+for network in "${!NETWORK_NAMES[@]}"; do
+  for epoch in $EPOCHS; do
+    DATASET=$(echo $FEATURE | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${SAMPLING}-${CLASS_LABEL}
+    LABEL=${NETWORK_NAMES[$network]}
+    EXPERIMENT=${NETWORK_NAMES[$network]}-${epoch}epochs-bs${BATCH}
+    MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
+    DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/$DATASET $EXPERIMENT $LABEL"
+  done
 done
-echo $DAL_PARAMS
 ciml-plot-data $DAL_PARAMS -k accuracy \
-  --output accuracy_by_sampling-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "(1 - Accuracy) with different resolution" \
+  --output accuracy_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
+  --title "(1 - Accuracy) with different network topologies" \
   --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k loss \
-  --output loss_by_sampling-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "Loss with different resolution" \
+  --output loss_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
+  --title "Loss with different network topologies" \
   --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k average_loss \
-  --output avg_loss_by_sampling-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
-  --title "Average Loss with different resolution" \
+  --output avg_loss_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
+  --title "Loss with different network topologies" \
   --data-path "$TARGET_DATA_PATH"

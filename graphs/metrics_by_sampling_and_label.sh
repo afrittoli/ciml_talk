@@ -38,21 +38,24 @@ for sampling in ${SAMPLINGS}; do
     EXPERIMENT=${NETWORK_NAME}-${EPOCHS}epochs-bs${BATCH}
     MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
     if [[ "$class_label" == "node_provider_all" ]]; then
-      DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label \"$MODEL_ID/$DATASET\" $EXPERIMENT $LABEL"
+      DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/data/$DATASET $EXPERIMENT $LABEL"
     else
-      DAL_PARAMS="$DAL_PARAMS --dataset-experiment-comp \"$MODEL_ID/$DATASET\" $EXPERIMENT"
+      DAL_PARAMS="$DAL_PARAMS --dataset-experiment-comp $MODEL_ID/data/$DATASET $EXPERIMENT"
     fi
   done
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \
   --output accuracy_by_sampling-compare-classes${FILENAME_SUFFIX}.png \
   --title "1 - Accuracy with different resolution" \
-  --experiment-sets-names "All Classes" "Grouped Classes"
+  --experiment-sets-names "All Classes" "Grouped Classes" \
+  --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k loss \
   --output loss_by_sampling-compare-classes${FILENAME_SUFFIX}.png \
   --title "Loss with different resolution" \
-  --experiment-sets-names "All Classes" "Grouped Classes"
+  --experiment-sets-names "All Classes" "Grouped Classes" \
+  --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k average_loss \
   --output avg_loss_by_sampling-compare-classes${FILENAME_SUFFIX}.png \
   --title "Average Loss with different resolution" \
-  --experiment-sets-names "All Classes" "Grouped Classes"
+  --experiment-sets-names "All Classes" "Grouped Classes" \
+  --data-path "$TARGET_DATA_PATH"
