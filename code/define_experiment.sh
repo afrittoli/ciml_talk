@@ -1,6 +1,5 @@
 # Define a local experiment
 ciml-setup-experiment --experiment dnn-5x100 \
-  --dataset cpu-load-1min-dataset \
   --estimator tf.estimator.DNNClassifier \
   --hidden-layers 100/100/100/100/100 \
   --steps $(( 2000 / 128 * 500 )) \
