@@ -22,7 +22,7 @@ done
 # Plot by sampling
 FEATURES="(usr|1m)"
 CLASS_LABEL=${CLASS_LABEL:-status}
-SAMPLINGS="10s 30s 1min 5min 10min"
+SAMPLINGS="1s 10s 30s 1min 5min 10min"
 BUILD_NAMES="tempest-full"
 EPOCHS="500"
 NETWORK=${NETWORK:-100/100/100/100/100}
