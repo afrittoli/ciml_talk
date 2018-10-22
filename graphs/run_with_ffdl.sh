@@ -32,7 +32,6 @@ if [[ "$ONLY_WAIT" == "true" ]]; then
     FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $experiment | cut -d';' -f4)
   done
 else
-  counter=0
   # Schedule all the experiments in FfDL
   for dataset in $DATASETS; do
     for experiment in $EXPERIMENTS; do
@@ -40,35 +39,35 @@ else
         is_new=$(grep "$dataset;$experiment" -c $EXPERIMENTS_LOG)
         [[ $is_new -ge 1 ]] && continue
       fi
-      if [[ $counter -gt $MAX_EXPERIMENTS ]]; then
-        break 2
-      fi
+      # Wait until one training slot becomes available
+      while [[ ${#FFDL_EXPERIMENTS[@]} -gt $MAX_EXPERIMENTS ]]; do
+        echo "$(date +'%F %R') Waiting for one experiment to complete..."
+        for model_id in ${!FFDL_EXPERIMENTS[@]}; do
+          model_json=$(ffdl show $model_id --json | egrep -v '^Getting model')
+          # If the model json is not JSON, the API call failed
+          echo $model_json | jq . &> /dev/null || continue
+          job_status=$(echo $model_json | jq -r .Payload.training.training_status.status)
+          if [[ "$job_status" == "FAILED" ]]; then
+            echo "$model_id FAILED"
+            unset FFDL_EXPERIMENTS[$model_id]
+            # One slot free, continue and skip the wait time
+            break 2
+          elif [[ "$job_status" == "COMPLETED" ]]; then
+            echo "$model_id COMPLETED"
+            unset FFDL_EXPERIMENTS[$model_id]
+            # One slot free, continue and skip the wait time
+            break 2
+          fi
+        done
+        echo "# experiments: ${#FFDL_EXPERIMENTS[@]}"
+        # Wait a minute before next loop
+        sleep 60
+      done
+      # There's a free training slot so schedule a job
       model_id=$($CIML_FFDL $dataset $experiment | awk '/Model ID/{ print $3 }')
-      counter=$(( counter + 1 ))
       echo "Submit job $model_id for dataset $dataset with experiment $experiment"
       FFDL_EXPERIMENTS[$model_id]="$dataset,$experiment"
       echo "$(date +'%F %R');$dataset;$experiment;$model_id" >> $EXPERIMENTS_LOG
     done
   done
 fi
-
-# Wait until experiments are complete
-while [[ ${#FFDL_EXPERIMENTS[@]} != 0 ]]; do
-  echo "$(date +'%F %R') Waiting for all experiments to complete..."
-  for model_id in ${!FFDL_EXPERIMENTS[@]}; do
-    model_json=$(ffdl show $model_id --json | egrep -v '^Getting model')
-    # If the model json is not JSON, the API call failed
-    echo $model_json | jq . &> /dev/null || continue
-    job_status=$(echo $model_json | jq -r .Payload.training.training_status.status)
-    if [[ "$job_status" == "FAILED" ]]; then
-      echo "$model_id FAILED"
-      unset FFDL_EXPERIMENTS[$model_id]
-    elif [[ "$job_status" == "COMPLETED" ]]; then
-      echo "$model_id COMPLETED"
-      unset FFDL_EXPERIMENTS[$model_id]
-    fi
-  done
-  echo "# experiments: ${#FFDL_EXPERIMENTS[@]}"
-  # Wait a minute before next loop
-  sleep 60
-done
