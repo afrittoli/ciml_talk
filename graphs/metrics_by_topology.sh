@@ -13,10 +13,10 @@ FILENAME_SUFFIX=${FILENAME_SUFFIX:-""}
 
 # Load all experiments in a declarative array
 declare -A FFDL_EXPERIMENTS
-for experiment in $(cat $EXPERIMENTS_LOG); do
-  dataset=$(echo $experiment | cut -d';' -f2)
-  experiment=$(echo $experiment | cut -d';' -f3)
-  FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $experiment | cut -d';' -f4)
+for exp in $(cat $EXPERIMENTS_LOG); do
+  dataset=$(echo $exp | cut -d';' -f2)
+  experiment=$(echo $exp | cut -d';' -f3)
+  FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $exp | cut -d';' -f4)
 done
 
 # Plot by sampling

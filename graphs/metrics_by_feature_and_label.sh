@@ -13,10 +13,10 @@ FILENAME_SUFFIX=${FILENAME_SUFFIX:-""}
 
 # Load all experiments in a declarative array
 declare -A FFDL_EXPERIMENTS
-for experiment in $(cat $EXPERIMENTS_LOG); do
-  dataset=$(echo $experiment | cut -d';' -f2)
-  experiment=$(echo $experiment | cut -d';' -f3)
-  FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $experiment | cut -d';' -f4)
+for exp in $(cat $EXPERIMENTS_LOG); do
+  dataset=$(echo $exp | cut -d';' -f2)
+  experiment=$(echo $exp | cut -d';' -f3)
+  FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $exp | cut -d';' -f4)
 done
 
 # Plot by feature and label
@@ -26,7 +26,7 @@ SAMPLING=1min
 BUILD_NAMES="tempest-full"
 EPOCHS="500"
 NETWORK=${NETWORK:-100/100/100/100/100}
-NETWORK_NAME=${NETWORK_NAME:-"dnn-100x5"}
+NETWORK_NAME=${NETWORK_NAME:-"dnn-5x100"}
 BATCH=128
 
 DAL_PARAMS=""
