@@ -46,14 +46,14 @@ for network in "${!NETWORK_NAMES[@]}"; do
   done
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \
-  --output accuracy_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
+  --output accuracy_by_epochs_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
   --title "(1 - Accuracy) with different network topologies" \
   --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k loss \
-  --output loss_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
+  --output loss_by_epochs_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
   --title "Loss with different network topologies" \
   --data-path "$TARGET_DATA_PATH"
 ciml-plot-data $DAL_PARAMS -k average_loss \
-  --output avg_loss_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
+  --output avg_loss_by_epochs_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
   --title "Loss with different network topologies" \
   --data-path "$TARGET_DATA_PATH"

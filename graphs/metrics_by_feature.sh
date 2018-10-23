@@ -22,7 +22,7 @@ done
 # Plot by feature
 FEATURES="(usr|used|1m) (usr|1m) (usr|used) (usr) (used) (1m)"
 CLASS_LABEL=${CLASS_LABEL:-status}
-SAMPLING="1min"
+SAMPLING=${SAMPLING:-"1min"}
 BUILD_NAMES="tempest-full"
 EPOCHS="500"
 NETWORK=${NETWORK:-100/100/100/100/100}

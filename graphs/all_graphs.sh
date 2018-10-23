@@ -30,4 +30,4 @@ echo "======> metrics_by_sampling_and_label" | tee -a all.log
 
 # Graphs for EPOCHS
 echo "======> metrics_by_epochs and topology" | tee -a all.log
-./metrics_by_epochs_and_topology.sh $@ &>> all.log
+CLASS_LABEL=node_provider ./metrics_by_epochs_and_topology.sh $@ &>> all.log

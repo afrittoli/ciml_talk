@@ -399,7 +399,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
             \begin{itemize}
               \item{CI Job "tempest-full"}
               \item{Gate pipeline only}
-              \item{2000 examples, 1400 training, 600 test}
+              \item{3000 examples, 2100 training, 900 test}
             \end{itemize}
             \item{Hyper-parameters:}
             \begin{itemize}
@@ -498,7 +498,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
                 columns/metric/.style={string type},
                 every head row/.style={after row=\midrule},
                 every even row={5}{before row=\rowcolor{mygray}},
-              ]{code/usr_1m-1min-status-eval-compare.csv}
+              ]{code/usr_1m-10s-status-eval-compare.csv}
             }
           \end{center}
        \end{table}
@@ -527,8 +527,8 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
       \column{0.4\linewidth}
         \begin{itemize}
             \item{User CPU and 1min Load Avg}
-            \item{Resolution: 1 minute is enough}
-            \item{High accuracy: \emph{\textbf{0.995}}}
+            \item{Resolution: 10s best, 1 minute may be enough}
+            \item{High accuracy: \emph{\textbf{0.993}}}
             \item{High auc\_precision\_recall: \emph{\textbf{0.945}}}
             \item{A trained model might be applicable to similar CI jobs}
         \end{itemize}
@@ -554,7 +554,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
             \begin{itemize}
               \item{CI Job "tempest-full"}
               \item{Gate pipeline only}
-              \item{2000 examples, 1400 training, 600 test}
+              \item{3000 examples, 2100 training, 900 test}
             \end{itemize}
             \item{Hyper-parameters:}
             \begin{itemize}
