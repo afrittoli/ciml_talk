@@ -35,10 +35,13 @@ DAL_PARAMS=""
 # Do the data building and plotting
 for network in "${!NETWORK_NAMES[@]}"; do
   for epoch in $EPOCHS; do
-    DATASET=$(echo $FEATURE | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${SAMPLING}-${CLASS_LABEL}
+    DATASET=$(echo $FEATURES | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${SAMPLING}-${CLASS_LABEL}
     LABEL=${NETWORK_NAMES[$network]}
     EXPERIMENT=${NETWORK_NAMES[$network]}-${epoch}epochs-bs${BATCH}
     MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
+    if [[ "$MODEL_ID" == "" ]]; then
+      echo "$DATASET $EXPERIMENT" >> missing_experiments.log
+    fi
     DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/$DATASET $EXPERIMENT $LABEL"
   done
 done

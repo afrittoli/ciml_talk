@@ -38,10 +38,13 @@ NETWORK_NAMES["1000/1000/1000"]=dnn-3x1000
 DAL_PARAMS=""
 # Do the data building and plotting
 for network in "${!NETWORK_NAMES[@]}"; do
-  DATASET=$(echo $FEATURE | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${SAMPLING}-${CLASS_LABEL}
+  DATASET=$(echo $FEATURES | tr "|" "_" | sed -e "s/(//g" -e "s/)//g")-${SAMPLING}-${CLASS_LABEL}
   LABEL=${NETWORK_NAMES[$network]}
   EXPERIMENT=${NETWORK_NAMES[$network]}-${EPOCHS}epochs-bs${BATCH}
   MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
+  if [[ "$MODEL_ID" == "" ]]; then
+    echo "$DATASET $EXPERIMENT" >> missing_experiments.log
+  fi
   DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/$DATASET $EXPERIMENT $LABEL"
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \

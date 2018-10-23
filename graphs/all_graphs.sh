@@ -28,5 +28,6 @@ echo "======> metrics_by_feature_and_label" | tee -a all.log
 echo "======> metrics_by_sampling_and_label" | tee -a all.log
 ./metrics_by_sampling_and_label.sh $@ &>> all.log
 
-# Graphs for EPOCHS and other datasets comparison
-# TBD
+# Graphs for EPOCHS
+echo "======> metrics_by_epochs and topology" | tee -a all.log
+./metrics_by_epochs_and_topology.sh $@ &>> all.log

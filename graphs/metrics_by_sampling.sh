@@ -36,6 +36,9 @@ for sampling in ${SAMPLINGS}; do
   LABEL=$sampling
   EXPERIMENT=${NETWORK_NAME}-${EPOCHS}epochs-bs${BATCH}
   MODEL_ID=${FFDL_EXPERIMENTS[$DATASET,$EXPERIMENT]}
+  if [[ "$MODEL_ID" == "" ]]; then
+    echo "$DATASET $EXPERIMENT" >> missing_datasets.log
+  fi
   DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/data/$DATASET $EXPERIMENT $LABEL"
 done
 echo $DAL_PARAMS
