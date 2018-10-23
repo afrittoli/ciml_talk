@@ -22,7 +22,7 @@ done
 # Plot by sampling
 FEATURES="(usr|1m)"
 CLASS_LABEL=${CLASS_LABEL:-status}
-SAMPLINGS="1s 10s 30s 1min 5min 10min"
+SAMPLINGS="10s 30s 1min 5min 10min"
 BUILD_NAMES="tempest-full"
 EPOCHS="500"
 NETWORK=${NETWORK:-100/100/100/100/100}
@@ -41,7 +41,6 @@ for sampling in ${SAMPLINGS}; do
   fi
   DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/data/$DATASET $EXPERIMENT $LABEL"
 done
-echo $DAL_PARAMS
 ciml-plot-data $DAL_PARAMS -k accuracy \
   --output accuracy_by_sampling-${CLASS_LABEL}${FILENAME_SUFFIX}.png \
   --title "(1 - Accuracy) with different resolution" \

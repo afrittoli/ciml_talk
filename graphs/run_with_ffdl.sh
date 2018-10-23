@@ -36,7 +36,7 @@ else
   for dataset in $DATASETS; do
     for experiment in $EXPERIMENTS; do
       if [[ "$ONLY_NEW"  == "true" ]]; then
-        is_new=$(grep "$dataset;$experiment" -c $EXPERIMENTS_LOG)
+        is_new=$(grep ";$dataset;$experiment" -c $EXPERIMENTS_LOG)
         [[ $is_new -ge 1 ]] && continue
       fi
       # Wait until one training slot becomes available

@@ -45,7 +45,7 @@ for network in "${!NETWORK_NAMES[@]}"; do
   if [[ "$MODEL_ID" == "" ]]; then
     echo "$DATASET $EXPERIMENT" >> missing_experiments.log
   fi
-  DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/$DATASET $EXPERIMENT $LABEL"
+  DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/data/$DATASET $EXPERIMENT $LABEL"
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \
   --output accuracy_by_topology-${CLASS_LABEL}${FILENAME_SUFFIX}.png \

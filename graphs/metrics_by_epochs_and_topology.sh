@@ -24,7 +24,7 @@ FEATURES="(usr|1m)"
 CLASS_LABEL=${CLASS_LABEL:-status}
 SAMPLING=1min
 BUILD_NAMES="tempest-full"
-EPOCHS="100 500 1000 5000"
+EPOCHS="100 500"
 BATCH=128
 
 declare -A NETWORK_NAMES
@@ -42,7 +42,7 @@ for network in "${!NETWORK_NAMES[@]}"; do
     if [[ "$MODEL_ID" == "" ]]; then
       echo "$DATASET $EXPERIMENT" >> missing_experiments.log
     fi
-    DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/$DATASET $EXPERIMENT $LABEL"
+    DAL_PARAMS="$DAL_PARAMS --dataset-experiment-label $MODEL_ID/data/$DATASET $EXPERIMENT $LABEL"
   done
 done
 ciml-plot-data $DAL_PARAMS -k accuracy \

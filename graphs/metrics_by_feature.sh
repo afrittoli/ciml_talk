@@ -13,7 +13,7 @@ FILENAME_SUFFIX=${FILENAME_SUFFIX:-""}
 
 # Load all experiments in a declarative array
 declare -A FFDL_EXPERIMENTS
-for exp in $(cat $EXPERIMENTS_LOG); do
+for exp in $(awk '{ print $2 }' $EXPERIMENTS_LOG); do
   dataset=$(echo $exp | cut -d';' -f2)
   experiment=$(echo $exp | cut -d';' -f3)
   FFDL_EXPERIMENTS[$dataset,$experiment]=$(echo $exp | cut -d';' -f4)
