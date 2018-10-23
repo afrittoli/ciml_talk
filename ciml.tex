@@ -221,79 +221,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
     \end{columns}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Experiment Workflow}
-    \begin{columns}
-      \column{0.4\linewidth}
-        \begin{itemize}
-            \item{Visualize data}
-            \item{Define a dataset}
-            \item{\textbf{Define an experiment}}
-            \item{\textbf{Run the training}}
-            \item{\textbf{Collect results}}
-            \item{Visualize data}
-        \end{itemize}
-        \column{0.6\linewidth}
-          \begin{figure}
-            \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_experiment.sh}
-          \end{figure}
-          \begin{figure}
-            \lstinputlisting[basicstyle=\tiny,language=bash]{code/run_training.sh}
-          \end{figure}
-    \end{columns}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Training Infrastructure}
-    \begin{columns}
-      \column{0.5\linewidth}
-        \begin{figure}
-        \begin{center}
-          \includegraphics[width=1\textwidth]{diagrams/FfDL-Diagram.png}
-             \caption{FfDL Architecture - Source: \href{https://developer.ibm.com/code/2018/03/20/democratize-ai-with-fabric-for-deep-learning/l}{https://developer.ibm.com/code/}}
-        \end{center}
-        \end{figure}
-      \column{0.5\linewidth}
-        \begin{itemize}
-          \item{TensorFlow Estimator API}
-          \item{CIML wrapper}
-          \item{ML framework interchangable}
-          \item{Training Options:}
-          \begin{itemize}
-            \item{Run on a local machine}
-            \item{Helm deploy CIML, run in containers}
-            \item{Submit training jobs to Ffdl}
-            \item{\light{Kubeflow}}
-          \end{itemize}
-        \end{itemize}
-    \end{columns}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Prediction}
-    \begin{columns}
-      \column{0.5\linewidth}
-        \begin{itemize}
-            \item{Event driven: near real time}
-            \item{No request to serve the prediction to}
-            \item{MQTT Trigger from the CI system}
-            \item{CIML produces the prediction}
-            \item{Trusted Source: Continuous Training}
-        \end{itemize}
-      \column{0.5\linewidth}
-        \begin{itemize}
-          \item{CIML kubernetes app components:}
-          \begin{itemize}
-            \item{MQTT Client receives events}
-            \item{Data module fetches and prepares data}
-            \item{TensorFlow wrapper issues the prediction}
-            \item{Example: comment back on Gerrit/Github}
-          \end{itemize}
-        \end{itemize}
-    \end{columns}
-\end{frame}
-
-\section{Data}
+\subsection{Data}
 \begin{frame}
     \frametitle{Data Selection}
     \begin{columns}
@@ -382,6 +310,78 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
             \item{Store normalized data on s3}
             \item{Input function for training}
             \item{Input function for evaluation}
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiment Workflow}
+    \begin{columns}
+      \column{0.4\linewidth}
+        \begin{itemize}
+            \item{Visualize data}
+            \item{Define a dataset}
+            \item{\textbf{Define an experiment}}
+            \item{\textbf{Run the training}}
+            \item{\textbf{Collect results}}
+            \item{Visualize data}
+        \end{itemize}
+        \column{0.6\linewidth}
+          \begin{figure}
+            \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_experiment.sh}
+          \end{figure}
+          \begin{figure}
+            \lstinputlisting[basicstyle=\tiny,language=bash]{code/run_training.sh}
+          \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Training Infrastructure}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{figure}
+        \begin{center}
+          \includegraphics[width=1\textwidth]{diagrams/FfDL-Diagram.png}
+             \caption{FfDL Architecture - Source: \href{https://developer.ibm.com/code/2018/03/20/democratize-ai-with-fabric-for-deep-learning/l}{https://developer.ibm.com/code/}}
+        \end{center}
+        \end{figure}
+      \column{0.5\linewidth}
+        \begin{itemize}
+          \item{TensorFlow Estimator API}
+          \item{CIML wrapper}
+          \item{ML framework interchangable}
+          \item{Training Options:}
+          \begin{itemize}
+            \item{Run on a local machine}
+            \item{Helm deploy CIML, run in containers}
+            \item{Submit training jobs to Ffdl}
+            \item{\light{Kubeflow}}
+          \end{itemize}
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Prediction}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Event driven: near real time}
+            \item{No request to serve the prediction to}
+            \item{MQTT Trigger from the CI system}
+            \item{CIML produces the prediction}
+            \item{Trusted Source: Continuous Training}
+        \end{itemize}
+      \column{0.5\linewidth}
+        \begin{itemize}
+          \item{CIML kubernetes app components:}
+          \begin{itemize}
+            \item{MQTT Client receives events}
+            \item{Data module fetches and prepares data}
+            \item{TensorFlow wrapper issues the prediction}
+            \item{Example: comment back on Gerrit/Github}
+          \end{itemize}
         \end{itemize}
     \end{columns}
 \end{frame}
