@@ -5,4 +5,4 @@ ciml-train-model --dataset cpu-load-1min-dataset \
   --data-path s3://cimldatasets
 
 # Train the same model in a FfDL cluster
-ffd_train.sh cpu-load-1min-dataset dnn-5x100
+ffdl_train.sh cpu-load-1min-dataset dnn-5x100
