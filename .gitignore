@@ -162,3 +162,7 @@ TSWLatexianTemp*
 data/git
 graphs/.jpc
 graphs/.graphs
+graphs/logs
+graphs/backup
+graphs/ffdl
+.DS_Store
