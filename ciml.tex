@@ -7,6 +7,9 @@
 \setbeamercolor{structure}{fg=osseu}
 \hypersetup{colorlinks,urlcolor=osseu}
 \setbeamertemplate{footline}[frame number]
+% \RequirePackage{animate subfigure media9 ocgx2 pgfplots}
+% run the following command to install package:
+% sudo tlmgr install animate subfigure media9 ocgx2 pgfplots
 % Inserting graphics
 \usepackage{graphicx}
 % Side-by-side figures, etc
@@ -28,6 +31,8 @@
 %\usetheme{Boadilla}
 \usepackage[T1]{fontenc}
 \usepackage{animate}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
 \usepackage{pgfplotstable}
 \usepackage{colortbl}
 \usepackage{booktabs}
@@ -95,7 +100,7 @@
   {Andrea Frittoli}
 }
 
-\date{October 23, 2018}
+\date{March 15, 2019}
 
 \title[Machine Learning for CI
 \hspace{2em}\insertframenumber/\inserttotalframenumber]{Machine Learning for CI}
@@ -133,6 +138,8 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
 }
 
 \section{Context}
+
+% TBD: Update the graph to a recent one
 \begin{frame}
   \frametitle{CI at Scale}
   \begin{columns}
@@ -151,7 +158,6 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
           \item{Triaging failures?}
           \item{AI to the rescue!}
       \end{itemize}
-    % Add a picture, perhaps test daily count?
   \end{columns}
 \end{frame}
 
@@ -262,6 +268,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
         \begin{itemize}
             \item{Unrolling}
             % (formula) x - mean / xmax - mmin
+            % NOTE: each line in the unrolled table is a sample
         \end{itemize}
         \begin{table}[h!]
           \begin{center}
@@ -301,6 +308,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
         \begin{center}
           \includegraphics[width=0.9\textwidth]{diagrams/dataset.png}
              \caption{Structure of a dataset}
+             % NOTE: the term "labels" is overloaded. In this case we mean the names of the features, like 'usr1', 'usr2' etc
         \end{center}
         \end{figure}
       \column{0.5\linewidth}
@@ -314,6 +322,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
     \end{columns}
 \end{frame}
 
+% NOTE: check about "local" experiment, can we store it in S3 as well or not.
 \begin{frame}
     \frametitle{Experiment Workflow}
     \begin{columns}
@@ -404,11 +413,14 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
             \item{Hyper-parameters:}
             \begin{itemize}
               \item{Activation function: ReLU}
+              % ReLU: rectifier, non linear component of the neuron, standard for binary classification
               \item{Output layer: Sigmoid}
+              % Best for binary classification 0,1
               \item{Optimizer: Adagrad}
               \item{Learning rate (initial): 0.05}
               \item{5 hidden layers, 100 units per layer}
               \item{Batch Size: 128, Epochs: 500}
+              % Good practice for batch size is a power of 2
             \end{itemize}
         \end{itemize}
       \column{0.5\linewidth}
@@ -449,6 +461,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
         \begin{figure}
           \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_feature-status.png}
         \end{figure}
+        % NOTE: check how total loss is calculated.
       \end{center}
   \end{columns}
 \end{frame}
@@ -462,6 +475,7 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
             \item{Primary metric: accuracy}
             \item{Aim for lower loss, caveat: overfitting}
             \item{Note: careful with NaN after down-sampling}
+            % On a pandas dataset, out.dropna() to remove any NaN. We cannot trust data to be 100% clean all the time, if there are missing sample they may cause NaN
             \item{Key:}
             \begin{itemize}
               \item{Original data frequency: 1s}
@@ -823,10 +837,12 @@ at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
   \frametitle{Future Work}
   \begin{itemize}
       \item{Build a service with persistence to track experiments over time}
+      % Explain what ^^^ is?
       \item{Look at adapting techniques for new models with different data}
       \item{Human curated dataset for supervised training}
-      \item{Research clustering techniques for unspervised training}
+      \item{Research clustering techniques for unsupervised training}
       \item{Explore job portability}
+      % Use the pass/fail data to predict degradation in the stability of CI jobs
   \end{itemize}
 \end{frame}
 
