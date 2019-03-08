@@ -1,5 +1,14 @@
 \documentclass[aspectratio=169,11pt,hyperref={colorlinks=true}]{beamer}
-\usetheme{boxes}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\usepackage[absolute,overlay]{textpos}
+% Code snippits
+\usepackage{listingsutf8}
+\usepackage{listings-golang}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{color}
 \setbeamertemplate{navigation symbols}{}
 \definecolor{ibm}{RGB}{70,107,176}
 \definecolor{osseu}{RGB}{26,107,56}
@@ -14,22 +23,11 @@
 \usepackage{graphicx}
 % Side-by-side figures, etc
 \usepackage{subfigure}
-% Code snippits
-\usepackage{listings}
-% Color stuff
-\usepackage{color}
 \usepackage{amsmath}
 \usepackage{tikz}
 \usepackage{tipa}
-\newcommand\RBox[1]{%
-  \tikz\node[draw,rounded corners,align=center,] {#1};%
-}
 \newcommand{\light}[1]{\textcolor{gray}{#1}}
 \usepackage{hyperref}
-%\usecolortheme{buzz}
-%\usecolortheme{wolverine}
-%\usetheme{Boadilla}
-\usepackage[T1]{fontenc}
 \usepackage{animate}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16}
@@ -69,73 +67,27 @@
 \setlength{\floatsep}{0pt}
 
 \author[Kyra Matt Andrea]{%
-    \texorpdfstring{
-        \begin{columns}
-            \column{.45\linewidth}
-            \centering
-            \textbf{Kyra Wulffert}\\
-            \href{mailto:kwulffert@yahoo.com}{kwulffert@yahoo.com}\\
-        \end{columns}
-   }
-   {Kyra Wulffert}
-   \and
-   \texorpdfstring{
-       \begin{columns}
-           \column{.45\linewidth}
-           \centering
-           \textbf{Matthew Treinish}\\
-           \href{mailto:mtreinish@kortar.org}{mtreinish@kortar.org}\\
-       \end{columns}
-  }
-  {Matthew Treinish}
-   \and
-   \texorpdfstring{
-       \begin{columns}
-           \column{.45\linewidth}
-           \centering
-           \textbf{Andrea Frittoli}\\
-           \href{mailto:andrea.frittoli@gmail.com}{andrea.frittoli@gmail.com}\\
-       \end{columns}
-  }
-  {Andrea Frittoli}
+\normalsize Kyra Wulffert \tiny kwulffert@yahoo.com \\
+\normalsize Matthew Treinish \tiny mtreinish@kortar.org \\
+\normalsize Andrea Frittoli \tiny andrea.frittoli@gmail.com \\
+\normalsize
 }
 
 \date{March 15, 2019}
+\title{Machine Learning for CI}
+\institute[FOSSASIA]{
+  FOSSASIA OpenTechSummit \\
+  Singapore 2019\\
+  Lifelong Learning Institute
+}
 
-\title[Machine Learning for CI
-\hspace{2em}\insertframenumber/\inserttotalframenumber]{Machine Learning for CI}
+\usetheme{ibmcloud}
 
 \begin{document}
 
-\setbeamertemplate{title page}{%
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=east]
-    at ([yshift=-45pt,xshift=-30pt]current page.north east) (title)
-  {\parbox[t]{.6\paperwidth}{\raggedleft%
-    \usebeamerfont{author}\textcolor{white}{\Huge \inserttitle}}};
-\node[anchor=east]
-  at ([yshift=-30pt,xshift=-20pt]current page.east) (author)
-  {\parbox[t]{\textwidth}{\raggedleft%
- \usebeamerfont{author}\textcolor{white}{\insertauthor}}};
-\node[anchor=south west]
-at([yshift=+10pt,xshift=-25pt]current page.south west) (link)
-  {\parbox[t]{\textwidth}{\raggedleft
-\usebeamerfont{colorlinks}\textcolor{white}{\href{https://github.com/afrittoli/ciml\_talk}{https://github.com/afrittoli/ciml\_talk}}}};
-\end{tikzpicture}
-}
-
-{%
-\setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{background_title.png}}
-\setbeamertemplate{footline}{}
 \begin{frame}[noframenumbering]
-    \hypersetup{colorlinks,urlcolor=white}
-    \maketitle
+\titlepage{}
 \end{frame}
-}
-
-\usebackgroundtemplate{%
-  \includegraphics[width=\paperwidth,height=\paperheight]{white_bg.png}
-}
 
 \section{Context}
 
