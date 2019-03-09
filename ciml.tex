@@ -14,7 +14,7 @@
 \definecolor{osseu}{RGB}{26,107,56}
 \setbeamercolor{titlelike}{fg=osseu}
 \setbeamercolor{structure}{fg=osseu}
-\hypersetup{colorlinks,urlcolor=osseu}
+% \hypersetup{colorlinks,urlcolor=osseu}
 \setbeamertemplate{footline}[frame number]
 % \RequirePackage{animate subfigure media9 ocgx2 pgfplots}
 % run the following command to install package:
@@ -98,7 +98,7 @@
     \column{0.6\linewidth}
       \begin{figure}
       \begin{center}
-        \includegraphics[width=1\textwidth]{graphs/daily_count.png}
+        \includegraphics[width=0.9\textwidth]{graphs/daily_count.png}
            \caption{Source: subunit2sql-graph dailycount}
       \end{center}
       \end{figure}
@@ -788,13 +788,11 @@
 \begin{frame}
   \frametitle{Future Work}
   \begin{itemize}
-      \item{Build a service with persistence to track experiments over time}
-      % Explain what ^^^ is?
       \item{Look at adapting techniques for new models with different data}
       \item{Human curated dataset for supervised training}
       \item{Research clustering techniques for unsupervised training}
       \item{Explore job portability}
-      % Use the pass/fail data to predict degradation in the stability of CI jobs
+      \item{Use the pass/fail data to detect degradation in CI Jobs}
   \end{itemize}
 \end{frame}
 
@@ -802,7 +800,7 @@
   \frametitle{Questions?}
   \begin{itemize}
       \item{This talk: \href{https://github.com/afrittoli/ciml\_talk}{https://github.com/afrittoli/ciml\_talk}}
-      \item{CIML:\href{https://github.com/mtreinish/ciml}{https://github.com/mtreinish/ciml}}
+      \item{CIML: \href{https://github.com/mtreinish/ciml}{https://github.com/mtreinish/ciml}}
   \end{itemize}
 \end{frame}
 
