@@ -11,10 +11,10 @@
 \usepackage{color}
 \setbeamertemplate{navigation symbols}{}
 \definecolor{ibm}{RGB}{70,107,176}
-\definecolor{osseu}{RGB}{26,107,56}
-\setbeamercolor{titlelike}{fg=osseu}
-\setbeamercolor{structure}{fg=osseu}
-% \hypersetup{colorlinks,urlcolor=osseu}
+\definecolor{mainfg}{RGB}{0,0,0}
+\setbeamercolor{titlelike}{fg=mainfg}
+\setbeamercolor{structure}{fg=mainfg}
+% \hypersetup{colorlinks,urlcolor=mainfg}
 \setbeamertemplate{footline}[frame number]
 % \RequirePackage{animate subfigure media9 ocgx2 pgfplots}
 % run the following command to install package:
@@ -46,7 +46,7 @@
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
   breaklines=true,                 % sets automatic line breaking
   captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{osseu},        % comment style
+  commentstyle=\color{mainfg},        % comment style
   extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
   keywordstyle=\color{blue},       % keyword style
@@ -57,7 +57,7 @@
   showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
   showstringspaces=false,          % underline spaces within strings only
   showtabs=false,                  % show tabs within strings adding particular underscores
-  stringstyle=\color{osseu},         % string literal style
+  stringstyle=\color{mainfg},         % string literal style
 }
 
 \setbeamerfont{caption}{series=\normalfont,size=\fontsize{8}{10}}
@@ -67,21 +67,23 @@
 \setlength{\floatsep}{0pt}
 
 \author[Kyra Matt Andrea]{%
-\normalsize Kyra Wulffert \tiny kwulffert@yahoo.com \\
+\normalsize Kyra Wulffert \tiny kwulffert@gmail.com \\
 \normalsize Matthew Treinish \tiny mtreinish@kortar.org \\
 \normalsize Andrea Frittoli \tiny andrea.frittoli@gmail.com \\
 \normalsize
 }
 
-\date{March 15, 2019}
+\date{November 22, 2019}
 \title{Machine Learning for CI}
-\institute[FOSSASIA]{
-  FOSSASIA OpenTechSummit \\
-  Singapore 2019\\
-  Lifelong Learning Institute
+\institute[ODSC]{
+  Open Data Science Conference \\
+  London 2019
 }
 
-\usetheme{ibmcloud}
+% \usetheme{ibmcloud}
+% Themes: https://mpetroff.net/files/beamer-theme-matrix/
+\usetheme{default}
+\usecolortheme{crane}
 
 \begin{document}
 
