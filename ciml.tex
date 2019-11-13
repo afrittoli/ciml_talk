@@ -66,6 +66,7 @@
 \setlength{\abovecaptionskip}{0pt}
 \setlength{\floatsep}{0pt}
 
+% TBD space between authors
 \author[Kyra Matt Andrea]{%
 \normalsize Kyra Wulffert \tiny kwulffert@gmail.com \\
 \normalsize Matthew Treinish \tiny mtreinish@kortar.org \\
@@ -160,6 +161,7 @@
 
 \begin{frame}
     \frametitle{Experiment Workflow}
+    % TBD Add comment on Tekton / logo
     \begin{columns}
       \column{0.4\linewidth}
         \begin{itemize}
@@ -168,6 +170,7 @@
             \item{Define an experiment}
             \item{Run the training}
             \item{Collect results}
+            % TBD twice? Change to review or ~
             \item{Visualize data}
         \end{itemize}
         \column{0.6\linewidth}
@@ -256,6 +259,7 @@
 
 \begin{frame}
     \frametitle{Building the dataset}
+    % Dev is not used for dev, but for further evaluation and metrics report
     \begin{columns}
       \column{0.5\linewidth}
         \begin{figure}
@@ -294,6 +298,7 @@
             \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_experiment.sh}
           \end{figure}
           \begin{figure}
+            % Replace ffdl with tekton
             \lstinputlisting[basicstyle=\tiny,language=bash]{code/run_training.sh}
           \end{figure}
     \end{columns}
@@ -301,6 +306,7 @@
 
 \begin{frame}
     \frametitle{Training Infrastructure}
+    % Add tekton, details on kubeflow, open source
     \begin{columns}
       \column{0.5\linewidth}
         \begin{figure}
@@ -460,6 +466,7 @@
         \begin{table}[h!]
           \begin{center}
             \label{binary_eval_compare}
+            % Update accuracy to match previous slides
             \resizebox{1\linewidth}{!}{
               \pgfplotstabletypeset[
                 precision=3,
