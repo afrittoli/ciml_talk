@@ -1,0 +1,4 @@
+status,precision,recall,f1-score,support
+passed,0.99,0.99,0.99,751
+failed,0.88,0.75,0.81,40
+accuracy,,,0.98,791
