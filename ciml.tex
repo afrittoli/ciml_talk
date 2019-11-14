@@ -46,8 +46,7 @@
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
   breaklines=true,                 % sets automatic line breaking
   captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mainfg},        % comment style
-  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  commentstyle=\color{mainfg},        % comment stylendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
   keywordstyle=\color{blue},       % keyword style
   otherkeywords={*,...},           % if you want to add more keywords to the set
@@ -66,25 +65,30 @@
 \setlength{\abovecaptionskip}{0pt}
 \setlength{\floatsep}{0pt}
 
-% TBD space between authors
 \author[Kyra Matt Andrea]{%
-\normalsize Kyra Wulffert \tiny kwulffert@gmail.com \\
-\normalsize Matthew Treinish \tiny mtreinish@kortar.org \\
-\normalsize Andrea Frittoli \tiny andrea.frittoli@gmail.com \\
-\normalsize
+\LARGE Kyra Wulffert \\
+\LARGE Matthew Treinish \\
+\LARGE Andrea Frittoli \\
 }
+
+% \LARGE Kyra Wulffert \Large{kwulffert@gmail.com} \\
+% \LARGE Matthew Treinish \Large{mtreinish@kortar.org} \\
+% \LARGE Andrea Frittoli \Large{andrea.frittoli@gmail.com} \\
 
 \date{November 22, 2019}
 \title{Machine Learning for CI}
-\institute[ODSC]{
-  Open Data Science Conference \\
-  London 2019
+\institute[ODSC]{%
+Open Data Science Conference \\
+London 2019
 }
 
-% \usetheme{ibmcloud}
+\usetheme{ibmcloud}
 % Themes: https://mpetroff.net/files/beamer-theme-matrix/
-\usetheme{default}
-\usecolortheme{crane}
+% \usetheme{default}
+% \usecolortheme{crane}
+
+% Automatic section frame
+\AtBeginSection{\frame{\sectionpage}}
 
 \begin{document}
 
@@ -92,9 +96,34 @@
 \titlepage{}
 \end{frame}
 
-\section{Context}
+\begin{3columnsframe}
+  {
+  %\vspace{0.2\textheight}
+  \begin{centering}
+    Kyra Wulffert \\
+    kwulffert@gmail.com \\
+  \end{centering}
+  }
+  {
+  %\vspace{0.2\textheight}
+  \begin{centering}
+    Matthew Treinish \\
+    mtreinish@kortar.org \\
+  \end{centering}
+  }
+  {
+  %\vspace{0.2\textheight}
+  \begin{centering}
+    \includegraphics[width=0.8\textwidth]{img/af.jpg}
+    Andrea Frittoli \\
+    andrea.frittoli@gmail.com \\
+  \end{centering}
+  }
+  \frametitle{The Team}
+\end{3columnsframe}
 
-% TBD: Update the graph to a recent one
+\section{Data \\Sourcing}
+
 \begin{frame}
   \frametitle{CI at Scale}
   \begin{columns}
@@ -138,7 +167,6 @@
     \end{columns}
 \end{frame}
 
-\section{Infrastructure}
 \begin{frame}
     \frametitle{Collecting data}
     \begin{columns}
@@ -159,6 +187,8 @@
     \end{columns}
 \end{frame}
 
+\section{Data Preparation}
+
 \begin{frame}
     \frametitle{Experiment Workflow}
     % TBD Add comment on Tekton / logo
@@ -170,8 +200,6 @@
             \item{Define an experiment}
             \item{Run the training}
             \item{Collect results}
-            % TBD twice? Change to review or ~
-            \item{Visualize data}
         \end{itemize}
         \column{0.6\linewidth}
           \begin{figure}
@@ -184,7 +212,6 @@
     \end{columns}
 \end{frame}
 
-\subsection{Data}
 \begin{frame}
     \frametitle{Data Selection}
     \begin{columns}
@@ -291,7 +318,6 @@
             \item{\textbf{Define an experiment}}
             \item{\textbf{Run the training}}
             \item{\textbf{Collect results}}
-            \item{Visualize data}
         \end{itemize}
         \column{0.6\linewidth}
           \begin{figure}
@@ -303,6 +329,12 @@
           \end{figure}
     \end{columns}
 \end{frame}
+
+% \section{Data Pipelines} %
+% \section{Data Pipelines}
+\begin{sectionpic}
+{Data Pipelines}{img/pipelinecc0.jpg}
+\end{sectionpic}
 
 \begin{frame}
     \frametitle{Training Infrastructure}

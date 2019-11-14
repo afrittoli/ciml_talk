@@ -9,6 +9,6 @@ Install texlive with most of the plugins via your distro
 
 to build just run::
 
-  % pdflatex ciml.tex
+  % xelatex ciml.tex
 
 the output will be ciml.pdf.

@@ -4,25 +4,26 @@
 \defbeamertemplate*{title page}{ibmcloud}[1][]
 {
   \begin{textblock*}{\paperwidth}(0.32cm,0.34cm)
-    \begin{beamercolorbox}[wd=0.4\paperwidth]{title page header}
-      \usebeamerfont{title}\inserttitle\par---\par%
-      \usebeamerfont{author}\small\insertauthor\par---\par%
-      \usebeamerfont{author}\small\insertinstitute\par%
+    \begin{beamercolorbox}[wd=0.50\paperwidth]{title page header}
+      \usebeamerfont{title}\Huge\inserttitle\par---\par%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.70\paperwidth]{title page header}
+      \usebeamerfont{author}\LARGE\insertauthor\Huge\par---\par%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.60\paperwidth]{title page header}
+      \usebeamerfont{author}\LARGE\insertinstitute\par%
     \end{beamercolorbox}%
     \vfill
-  \end{textblock*}
-  \begin{textblock*}{3.65cm}(0.77\paperwidth,0.86\paperheight)
-    \includegraphics[width=3.65cm]{img/ibm_cloud_large.png}
   \end{textblock*}
 }
 
 \@namedef{ps@navigation@titlepage}{%
   \setbeamertemplate{footline}{%
-    \parbox{0.9\linewidth}{\vspace*{-20pt}\hspace*{10pt}IBM Cloud / \insertdate / \copyright 2019 IBM Corporation}%
+    \parbox{0.9\linewidth}{\vspace*{-20pt}\hspace*{10pt}\insertdate }%
     \parbox{0.1\linewidth}{\vspace*{-20pt}\hspace*{70pt}}%
   }
   \setbeamertemplate{background}{
-    \includegraphics[width=\paperwidth,height=\paperheight]{img/title_background.png}
+    \includegraphics[width=\paperwidth,height=\paperheight]{img/odsc_title_background.png}
   }
   \setbeamercolor*{footline}{fg=white}
   \@nameuse{ps@navigation}}
@@ -32,22 +33,26 @@
 \defbeamertemplate*{section page}{ibmcloud}[1][]
 {
   \begin{textblock*}{\paperwidth}(0.32cm,0.34cm)
-    \begin{beamercolorbox}[wd=0.4\paperwidth]{section page header}
-      \usebeamerfont{section name}\insertsection%
+    \begin{beamercolorbox}[wd=0.5\paperwidth]{title page header}
+      \usebeamerfont{title}\Huge---\par%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.35\paperwidth]{section page header}
+      \usebeamerfont{section name}\Huge\insertsection%
     \end{beamercolorbox}%
     \vfill
-  \end{textblock*}
+  \end{textblock*}%
 }
 
 \@namedef{ps@navigation@sectionpage}{%
   \setbeamertemplate{background canvas}{%
     \begin{tikzpicture}[remember picture,overlay]
-      \node [rectangle, left color=ibmblack, right color=ibmdarkblue, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
+      \node [rectangle, left color=sectiondarkblue, right color=sectionlightblue, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
     \end{tikzpicture}%
   }
   \setbeamercolor*{footline}{fg=white}
   \setbeamercolor*{section name}{fg=white}
   \setbeamercolor*{section title}{fg=white}
+  \setbeamercolor*{frametitle}{fg=white}
   \@nameuse{ps@navigation}}
 \addtobeamertemplate{section page}{\thispagestyle{navigation@sectionpage}}{}
 
