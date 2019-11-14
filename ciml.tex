@@ -368,7 +368,7 @@
             \begin{itemize}
               \item{CI Job "tempest-full"}
               \item{Gate pipeline only}
-              \item{3000 examples, 2100 training, 900 test}
+              \item{3955 examples split in 60\% training, 20\% dev and 20\% test}
             \end{itemize}
             \item{Hyper-parameters:}
             \begin{itemize}
@@ -411,7 +411,7 @@
             \end{itemize}
             \item{Winner: (\textbf{usr}, \textbf{1m}) tuple}
             \item{Accuracy achieved: \emph{\textbf{0.992}}}
-            \item{7 mistakes on a 900 test set}
+            \item{6 mistakes on a 791 test set}
         \end{itemize}
       \column{0.5\linewidth}
         \begin{center}
@@ -445,7 +445,7 @@
             \end{itemize}
             \item{Winner: \textbf{10s}}
             \item{Accuracy achieved: \emph{\textbf{0.993}}}
-            \item{7 mistakes on a 900 test set}
+            \item{6 mistakes on a 791 test set}
         \end{itemize}
       \column{0.5\linewidth}
         \begin{center}
@@ -456,6 +456,50 @@
           \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_sampling-status.png}
         \end{figure}
       \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DNN - Binary Classification - Metrics report}
+    \begin{columns}
+      \column{0.5\linewidth}
+%Add metric report for usr,1m,1min and usr,1m,10s
+      \begin{table}[h!]
+        \begin{center}
+          \caption{Metrics report for usr\,1m and 1min}
+          %\label{Metrics report for usr_1m-10s}
+          \resizebox{0.6\linewidth}{!}{
+            \pgfplotstabletypeset[
+              every head row/.style={after row=\midrule},
+              columns/status/.style={string type},
+              every row no 1/.style={after row=\midrule},
+            ]{code/metrics_report_binary_1min.csv}
+          }
+        \end{center}
+      \end{table}
+
+      \begin{figure}
+        \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/confusion_plots/usr_1m-1min-statusdnn-5x100-500epochs-bs128.png}
+      \end{figure}
+      \column{0.5\linewidth}
+      \begin{table}[h!]
+        \begin{center}
+          \caption{Metrics report for usr\,1m and 10s}
+      %    \label{unrolled_sample}
+          \resizebox{0.6\linewidth}{!}{
+            \pgfplotstabletypeset[
+              every head row/.style={after row=\midrule},
+              columns/status/.style={string type},
+              every row no 1/.style={after row=\midrule},
+              ]{code/metrics_report_binary_10s.csv}
+          }
+      \end{center}
+      \end{table}
+        \begin{center}
+          \begin{figure}
+            \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/confusion_plots/usr_1m-10s-statusdnn-5x100-500epochs-bs128.png}
+          \end{figure}
+        \end{center}
   \end{columns}
 \end{frame}
 
@@ -501,10 +545,10 @@
     \begin{columns}
       \column{0.4\linewidth}
         \begin{itemize}
-            \item{User CPU and 1min Load Avg}
+            \item{Features: User CPU and 1min Load Avg}
             \item{Resolution: 10s best, 1 minute may be enough}
             \item{High accuracy: \emph{\textbf{0.993}}}
-            \item{High auc\_precision\_recall: \emph{\textbf{0.945}}}
+            \item{High precision, recall and F1-score}
             \item{A trained model might be applicable to similar CI jobs}
         \end{itemize}
       \column{0.6\linewidth}
@@ -674,7 +718,7 @@
             \begin{itemize}
                 \item{Different regions from a Cloud Operator}
                 \item{Consider as a single class}
-                \item{New number of classes is \textbf{6}}
+                \item{New number of classes is \textbf{7}}
             \end{itemize}
             \item{Experiments:}
               \begin{itemize}
@@ -722,6 +766,43 @@
           \includegraphics[width=0.8\textwidth,height=0.4\textheight]{graphs/loss_by_topology-node_provider.png}
         \end{figure}
         \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Multi Class - Metrics report}
+    \begin{columns}
+      \column{0.5\linewidth}
+        \begin{itemize}
+            \item{Experiment:}
+            \begin{itemize}
+              \item{Dataset: 3955 examples split in 60\% training, 20\% dev and 20\% test}
+              \item{Features: User CPU and Load Avg}
+              \item{Resolution: 1 minute}
+              \item{Hyperparameters: 3 hidden layers, 1000 units each}
+              \item{Cloud providers: 7}
+            \end{itemize}
+        \end{itemize}
+        \begin{center}
+         \begin{table}[h!]
+           \caption{Metrics report for usr\,1m and 1min}
+       %    \label{unrolled_sample}
+           \resizebox{0.6\linewidth}{!}{
+             \pgfplotstabletypeset[
+               every head row/.style={after row=\midrule},
+               columns/provider/.style={string type},
+               every row no 6/.style={after row=\midrule},
+               ]{code/metrics_report_multiclass_1min.csv}
+           }
+         \end{table}
+        \end{center}
+      \column{0.5\linewidth}
+       \begin{center}
+        \begin{figure}
+          \includegraphics[width=0.85\textwidth]{graphs/confusion_plots/usr_1n_1min_3x1000_title_new.png}
+        \end{figure}
+        \end{center}
+        \vfill
   \end{columns}
 \end{frame}
 
@@ -812,5 +893,4 @@
       \item{CIML: \href{https://github.com/mtreinish/ciml}{https://github.com/mtreinish/ciml}}
   \end{itemize}
 \end{frame}
-
 \end{document}
