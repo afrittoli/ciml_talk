@@ -154,23 +154,29 @@
   \end{frame}
 }
 
-% \newenvironment{centraldark}[1]
-% {
-%   \setbeamertemplate{background canvas}{%
-%     \begin{tikzpicture}[remember picture,overlay]
-%       \node [rectangle, left color=sectiondarkblue, right color=sectionlightblue, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
-%     \end{tikzpicture}%
-%   }
-%   \setbeamercolor*{footline}{fg=white}
-%   \setbeamercolor*{section name}{fg=white}
-%   \setbeamercolor*{section title}{fg=white}
-%   \setbeamercolor*{frametitle}{fg=white}
-%   \begin{frame}[c]
-%     \centering
-%     \Huge#1
-% {
-%   \end{frame}
-% }
+\newenvironment{centraldark}[1]
+{
+  \setbeamertemplate{background canvas}{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node [rectangle, left color=sectiondarkblue, right color=sectionlightblue, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
+    \end{tikzpicture}%
+  }
+  \setbeamercolor*{footline}{fg=white}
+  \setbeamercolor*{section name}{fg=white}
+  \setbeamercolor*{section title}{fg=white}
+  \setbeamercolor*{frametitle}{fg=white}
+  \begin{frame}[plain]
+    \begin{textblock*}{\paperwidth}(0.32cm,0.40\paperheight)
+      \begin{beamercolorbox}[wd=0.98\paperwidth]{title page header}
+        \begin{centering}
+        \usebeamerfont{title}\Huge#1\par%
+        \end{centering}
+      \end{beamercolorbox}%
+    \end{textblock*}%
+}
+{
+  \end{frame}
+}
 
 \newenvironment{stripedframe}[4]
 {
