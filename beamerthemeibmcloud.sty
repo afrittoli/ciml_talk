@@ -145,15 +145,32 @@
     \begin{textblock*}{0.45\paperwidth}(0.4\paperwidth,0.3\paperheight)
       \includegraphics[width=0.45\paperwidth]{#2}
     \end{textblock*}
-    \begin{textblock*}{0.2\paperwidth}(0.77\paperwidth,0.75\paperheight)
-      \includegraphics[width=0.03\paperwidth]{img/cc.png}
-      \includegraphics[width=0.03\paperwidth]{img/zero.png}
+    \begin{textblock*}{0.2\paperwidth}(0.78\paperwidth,0.80\paperheight)
+      \includegraphics[width=0.017\paperwidth]{img/cc.png}
+      \includegraphics[width=0.017\paperwidth]{img/zero.png}
     \end{textblock*}
 }
 {
   \end{frame}
 }
 
+% \newenvironment{centraldark}[1]
+% {
+%   \setbeamertemplate{background canvas}{%
+%     \begin{tikzpicture}[remember picture,overlay]
+%       \node [rectangle, left color=sectiondarkblue, right color=sectionlightblue, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
+%     \end{tikzpicture}%
+%   }
+%   \setbeamercolor*{footline}{fg=white}
+%   \setbeamercolor*{section name}{fg=white}
+%   \setbeamercolor*{section title}{fg=white}
+%   \setbeamercolor*{frametitle}{fg=white}
+%   \begin{frame}[c]
+%     \centering
+%     \Huge#1
+% {
+%   \end{frame}
+% }
 
 \newenvironment{stripedframe}[4]
 {
