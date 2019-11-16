@@ -852,6 +852,79 @@ London 2019
 \end{frame}
 
 \begin{frame}
+    \frametitle{Multi Class - Clustering}
+    \begin{columns}
+      \column{0.55\linewidth}
+      \begin{itemize}
+          \item{Unsupervised learning on multiclass dataset}
+          \item{Dataset: features CPU, Avg.load; resolution 10s}
+          \item{Algorithm: kmeans}
+          \item{Number of clusters based on elbow method and silhouette score}
+          \item{Recommended number of clusters: 3 to 4}
+          \item{Fits with the number of providers with most examples in dataset}
+      \end{itemize}
+      \column{0.45\linewidth}
+        \begin{center}
+          \begin{table}[h!]
+            \begin{center}
+              %\caption{Tests executed by cloud provided}
+                     \resizebox{0.5\linewidth}{!}{
+                \pgfplotstabletypeset[
+                  every head row/.style={after row=\midrule},
+                  columns/provider/.style={string type},
+                  %every row no 1/.style={after row=\midrule},
+                ]{code/clustering_multiclass_classes.csv}
+              }
+            \end{center}
+         \end{table}
+         \begin{figure}
+           \includegraphics[width=0.6\textwidth]{graphs/elbow_method_multiclass.png}
+          \end{figure}
+        \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Multi Class - Clustering}
+  \begin{columns}
+    \column{0.40\linewidth}
+    \begin{table}[h!]
+      \begin{center}
+        %\caption{Tests executed by cloud provided}
+               \resizebox{0.7\linewidth}{!}{
+          \pgfplotstabletypeset[
+            every head row/.style={after row=\midrule},
+            columns/cluster/.style={string type},
+            %every row no 1/.style={after row=\midrule},
+          ]{code/clustering_multiclass_clusters_3.csv}
+        }
+      \end{center}
+    \end{table}
+    \begin{table}[h!]
+      \begin{center}
+        %\caption{Tests executed by cloud provided}
+               \resizebox{0.7\linewidth}{!}{
+          \pgfplotstabletypeset[
+            every head row/.style={after row=\midrule},
+            columns/cluster/.style={string type},
+            %every row no 1/.style={after row=\midrule},
+          ]{code/clustering_multiclass_clusters_4.csv}
+        }
+      \end{center}
+    \end{table}
+    \column{0.60\linewidth}
+    \begin{center}
+     \begin{figure}
+      \includegraphics[width=0.8\textwidth]{graphs/silhouette_multiclass_3.png}
+      \end{figure}
+      \begin{figure}
+       \includegraphics[width=0.8\textwidth]{graphs/silhouette_multiclass_4.png}
+       \end{figure}
+    \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
     \frametitle{Multi Class - Changing test job}
     \begin{columns}
       \column{0.5\linewidth}
@@ -890,15 +963,18 @@ London 2019
 \begin{frame}
     \frametitle{Multi Class - Summary}
     \begin{columns}
-      \column{0.4\linewidth}
+      \column{0.5\linewidth}
         \begin{itemize}
             \item{User CPU and 1min Load Avg}
             \item{Resolution: 1 minute is enough}
             \item{Hyperparameters: 3 hidden layers, 100 units each}
             \item{Reasonable accuracy: \emph{\textbf{0.925}}}
+            \item{Classification of new or less used cloud providers fails}
+            \item{System data can be used to cluster heavily used cloud providers}
+            \item{Clustering of CP inap is accurate, what is special in this CP?}
             \item{A trained model is not applicable to similar CI jobs}
         \end{itemize}
-      \column{0.6\linewidth}
+      \column{0.5\linewidth}
         \begin{figure}
           \begin{center}
             \includegraphics[width=0.9\textwidth,height=0.5\textheight]{graphs/cpu_1m-1min-dnn3x100-node_provider-loss_curve.png}
