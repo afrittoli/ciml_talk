@@ -357,24 +357,34 @@ London 2019
     % Add tekton, details on kubeflow, open source
     \begin{columns}
       \column{0.5\linewidth}
-        \begin{figure}
-        \begin{center}
-          \includegraphics[width=1\textwidth]{diagrams/FfDL-Diagram.png}
-             \caption{FfDL Architecture - Source: \href{https://developer.ibm.com/code/2018/03/20/democratize-ai-with-fabric-for-deep-learning/l}{https://developer.ibm.com/code/}}
-        \end{center}
-        \end{figure}
+        \begin{centering}
+          \includegraphics[width=0.2\columnwidth]{img/jupyter.png}
+          \hspace{0.13\columnwidth}
+          \includegraphics[width=0.2\columnwidth]{img/tekton-icon.png} \\
+          \vspace{0.02\columnwidth}
+          \includegraphics[width=0.2\columnwidth]{img/tf.png}
+          \hspace{0.13\columnwidth}
+          \includegraphics[width=0.2\columnwidth]{img/keras.jpg} \\
+          \vspace{0.02\columnwidth}
+          \includegraphics[width=0.2\columnwidth]{img/ffdl.jpg} \\
+        \end{centering}
       \column{0.5\linewidth}
         \begin{itemize}
-          \item{TensorFlow Estimator API}
-          \item{CIML wrapper}
+          \item{Training via CIML}
           \item{ML framework interchangable}
-          \item{Training Options:}
           \begin{itemize}
-            \item{Run on a local machine}
-            \item{Helm deploy CIML, run in containers}
-            \item{Submit training jobs to Ffdl}
-            \item{\light{Kubeflow}}
+            \item{TensorFlow Estimator API}
+            \item{Keras}
+            \item{Scikit-learn}
           \end{itemize}
+          \item{Training Infra}
+          \begin{itemize}
+            \item{Local machine, Local/S3 Storage}
+            \item{Ffdl Jobs, S3 Storage}
+            \item{Tekton Tasks, S3 Storage}
+            \item{\light{Kubeflow Pipelines}}
+          \end{itemize}
+          \item{Helm Chart for CIML}
         \end{itemize}
     \end{columns}
 \end{frame}
