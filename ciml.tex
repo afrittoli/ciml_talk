@@ -210,6 +210,10 @@ London 2019
             \item{Run the training}
             \item{Collect results}
         \end{itemize}
+        \vspace{0.1\paperheight}
+        \begin{center}
+          \includegraphics[width=0.4\textwidth]{img/tekton.png}
+        \end{center}
         \column{0.6\linewidth}
           \begin{figure}
             \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_dataset.sh}
@@ -316,7 +320,12 @@ London 2019
     \end{columns}
 \end{frame}
 
-% NOTE: check about "local" experiment, can we store it in S3 as well or not.
+% \section{Data Pipelines} %
+% \section{Data Pipelines}
+\begin{sectionpic}
+{Data Pipelines}{img/pipelinecc0.jpg}
+\end{sectionpic}
+
 \begin{frame}
     \frametitle{Experiment Workflow}
     \begin{columns}
@@ -328,6 +337,10 @@ London 2019
             \item{\textbf{Run the training}}
             \item{\textbf{Collect results}}
         \end{itemize}
+        \vspace{0.1\paperheight}
+        \begin{center}
+          \includegraphics[width=0.4\textwidth]{img/tekton.png}
+        \end{center}
         \column{0.6\linewidth}
           \begin{figure}
             \lstinputlisting[basicstyle=\tiny,language=bash]{code/define_experiment.sh}
@@ -338,12 +351,6 @@ London 2019
           \end{figure}
     \end{columns}
 \end{frame}
-
-% \section{Data Pipelines} %
-% \section{Data Pipelines}
-\begin{sectionpic}
-{Data Pipelines}{img/pipelinecc0.jpg}
-\end{sectionpic}
 
 \begin{frame}
     \frametitle{Training Infrastructure}
