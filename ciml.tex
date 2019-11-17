@@ -200,7 +200,6 @@ London 2019
 
 \begin{frame}
     \frametitle{Experiment Workflow}
-    % TBD Add comment on Tekton / logo
     \begin{columns}
       \column{0.4\linewidth}
         \begin{itemize}
@@ -380,6 +379,7 @@ London 2019
           \item{Training Infra}
           \begin{itemize}
             \item{Local machine, Local/S3 Storage}
+            \item{jupyter Notebook}
             \item{Ffdl Jobs, S3 Storage}
             \item{Tekton Tasks, S3 Storage}
             \item{\light{Kubeflow Pipelines}}
@@ -395,9 +395,9 @@ London 2019
       \column{0.5\linewidth}
         \begin{itemize}
             \item{Event driven: near real time}
-            \item{No request to serve the prediction to}
             \item{MQTT Trigger from the CI system}
             \item{CIML produces the prediction}
+            \item{Example: comment back on Gerrit/Github}
             \item{Trusted Source: Continuous Training}
         \end{itemize}
       \column{0.5\linewidth}
@@ -407,7 +407,6 @@ London 2019
             \item{MQTT Client receives events}
             \item{Data module fetches and prepares data}
             \item{TensorFlow wrapper issues the prediction}
-            \item{Example: comment back on Gerrit/Github}
           \end{itemize}
         \end{itemize}
     \end{columns}
@@ -912,6 +911,24 @@ London 2019
           \pgfplotstabletypeset[
             every head row/.style={after row=\midrule},
             columns/cluster/.style={string type},
+            columns/pclass/.style={
+              column type=c,
+              dec sep align,
+              postproc cell content/.append code={
+                  \ifnum1=\pgfplotstablepartno
+                      \pgfkeysalso{@cell content/.add={}{\%}}%
+                  \fi
+              },
+            },
+            columns/pcluster/.style={
+              column type=c,
+              dec sep align,
+              postproc cell content/.append code={
+                  \ifnum1=\pgfplotstablepartno
+                      \pgfkeysalso{@cell content/.add={}{\%}}%
+                  \fi
+              },
+            },
             %every row no 1/.style={after row=\midrule},
           ]{code/clustering_multiclass_clusters_3.csv}
         }
@@ -924,7 +941,25 @@ London 2019
           \pgfplotstabletypeset[
             every head row/.style={after row=\midrule},
             columns/cluster/.style={string type},
-            %every row no 1/.style={after row=\midrule},
+            every row no 1/.style={after row=\midrule},
+            columns/pclass/.style={
+              column type=c,
+              dec sep align,
+              postproc cell content/.append code={
+                  \ifnum1=\pgfplotstablepartno
+                      \pgfkeysalso{@cell content/.add={}{\%}}%
+                  \fi
+              },
+            },
+            columns/pcluster/.style={
+              column type=c,
+              dec sep align,
+              postproc cell content/.append code={
+                  \ifnum1=\pgfplotstablepartno
+                      \pgfkeysalso{@cell content/.add={}{\%}}%
+                  \fi
+              },
+            },
           ]{code/clustering_multiclass_clusters_4.csv}
         }
       \end{center}
@@ -941,41 +976,41 @@ London 2019
   \end{columns}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Multi Class - Changing test job}
-    \begin{columns}
-      \column{0.5\linewidth}
-        \begin{table}[h!]
-          \begin{center}
-            \label{multi_eval_compare}
-            \resizebox{1\linewidth}{!}{
-              \pgfplotstabletypeset[
-                precision=3,
-                columns/metric/.style={string type},
-                every head row/.style={after row=\midrule},
-                every even row={5}{before row=\rowcolor{mygray}},
-              ]{code/usr_1m-1min-node_provider-eval-compare.csv}
-            }
-          \end{center}
-       \end{table}
-      \column{0.5\linewidth}
-        \begin{itemize}
-            \item{Train with "tempest-full"}
-            \item{Evaluating with "tempest-full-py3"}
-            \begin{itemize}
-              \item{Similar setup, uses python3}
-              \item{It does not include swift and swift tests}
-              \item{600 examples evaluation set}
-            \end{itemize}
-            \item{Dataset and training setup:}
-            \begin{itemize}
-              \item{Features: (usr, 1m)}
-              \item{Resolution: 1min}
-              \item{Same hyper-parameters (dnn-3x100)}
-            \end{itemize}
-        \end{itemize}
-    \end{columns}
-\end{frame}
+% \begin{frame}
+%     \frametitle{Multi Class - Changing test job}
+%     \begin{columns}
+%       \column{0.5\linewidth}
+%         \begin{table}[h!]
+%           \begin{center}
+%             \label{multi_eval_compare}
+%             \resizebox{1\linewidth}{!}{
+%               \pgfplotstabletypeset[
+%                 precision=3,
+%                 columns/metric/.style={string type},
+%                 every head row/.style={after row=\midrule},
+%                 every even row={5}{before row=\rowcolor{mygray}},
+%               ]{code/usr_1m-1min-node_provider-eval-compare.csv}
+%             }
+%           \end{center}
+%        \end{table}
+%       \column{0.5\linewidth}
+%         \begin{itemize}
+%             \item{Train with "tempest-full"}
+%             \item{Evaluating with "tempest-full-py3"}
+%             \begin{itemize}
+%               \item{Similar setup, uses python3}
+%               \item{It does not include swift and swift tests}
+%               \item{600 examples evaluation set}
+%             \end{itemize}
+%             \item{Dataset and training setup:}
+%             \begin{itemize}
+%               \item{Features: (usr, 1m)}
+%               \item{Resolution: 1min}
+%               \item{Same hyper-parameters (dnn-3x100)}
+%             \end{itemize}
+%         \end{itemize}
+%     \end{columns}
+% \end{frame}
 
 \begin{frame}
     \frametitle{Multi Class - Summary}
@@ -986,9 +1021,8 @@ London 2019
             \item{Resolution: 1 minute is enough}
             \item{Hyperparameters: 3 hidden layers, 100 units each}
             \item{Reasonable accuracy: \emph{\textbf{0.925}}}
-            \item{Classification of new or less used cloud providers fails}
-            \item{System data can be used to cluster heavily used cloud providers}
-            \item{Clustering of CP inap is accurate, what is special in this CP?}
+            \item{System data can be used to cluster cloud providers}
+            \item{Higher support helps for better clustering}
             \item{A trained model is not applicable to similar CI jobs}
         \end{itemize}
       \column{0.5\linewidth}
@@ -1008,19 +1042,18 @@ London 2019
       \item{Collect data}
       \item{Know your data}
       \item{Work with cloud tools}
-      \item Able to confirm that system load plays a role in failures
-      \item Load profiles are consistent across regions in our cloud providers
+      \item{Able to confirm that system load plays a role in failures}
+      \item{Load profiles are consistent across regions in our cloud providers}
     \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Future Work}
   \begin{itemize}
-      \item{Look at adapting techniques for new models with different data}
-      \item{Human curated dataset for supervised training}
-      \item{Research clustering techniques for unsupervised training}
-      \item{Explore job portability}
-      \item{Use the pass/fail data to detect degradation in CI Jobs}
+    \item{Clustering of CP inap is accurate, what is special about this CP?}
+    \item{Extend dataset to include system/application logs}
+    \item{Explore clustering of failed jobs}
+    \item{Explore job portability}
   \end{itemize}
 \end{frame}
 

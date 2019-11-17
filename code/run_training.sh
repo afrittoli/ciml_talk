@@ -9,5 +9,5 @@ ffdl_train.sh cpu-load-1min-dataset dnn-5x100
 
 # Train the same model with a Tekton task
 tkn task start ciml-run-training \
-  -p dataset=$dataset \
-  -p experiment=$experiment
+  -p dataset=dnn-5x100 \
+  -p experiment=cpu-load-1min-dataset
