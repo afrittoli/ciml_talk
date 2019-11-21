@@ -235,6 +235,7 @@ London 2019
             \begin{itemize}
               \item{Dstat feature selection}
               \item{Data resolution (down-sampling)}
+              \item{Cleanup (e.g. NaN)}
             \end{itemize}
         \end{itemize}
       \column{0.5\linewidth}
@@ -379,7 +380,7 @@ London 2019
           \item{Training Infra}
           \begin{itemize}
             \item{Local machine, Local/S3 Storage}
-            \item{jupyter Notebook}
+            \item{Jupyter Notebook}
             \item{Ffdl Jobs, S3 Storage}
             \item{Tekton Tasks, S3 Storage}
             \item{\light{Kubeflow Pipelines}}
@@ -427,7 +428,7 @@ London 2019
             \begin{itemize}
               \item{CI Job "tempest-full"}
               \item{Gate pipeline only}
-              \item{3955 examples split in 60\% training, 20\% dev and 20\% test}
+              \item{3955 examples split in 70\% training and 30\% test}
             \end{itemize}
             \item{Hyper-parameters:}
             \begin{itemize}
