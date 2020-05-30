@@ -123,17 +123,15 @@
 
 \newenvironment{sectionpic}[2]
 {
-  \setbeamertemplate{background canvas}{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node [rectangle, left color=sectiondarkblue, right color=sectionlightblue, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
-    \end{tikzpicture}%
+  \setbeamertemplate{background}{
+    \includegraphics[width=\paperwidth,height=\paperheight]{img/jnation_section_background.png}
   }
   \setbeamercolor*{footline}{fg=white}
   \setbeamercolor*{section name}{fg=white}
   \setbeamercolor*{section title}{fg=white}
   \setbeamercolor*{frametitle}{fg=white}
   \begin{frame}[t]
-    \begin{textblock*}{\paperwidth}(0.32cm,0.34cm)
+    \begin{textblock*}{\paperwidth}(1.5cm,0.34cm)
       \begin{beamercolorbox}[wd=0.5\paperwidth]{title page header}
         \usebeamerfont{title}\Huge---\par%
       \end{beamercolorbox}%
@@ -156,11 +154,11 @@
 
 \newenvironment{centraldark}[1]
 {
-  \setbeamertemplate{background canvas}{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node [rectangle, left color=sectiondarkblue, right color=sectionlightblue, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
-    \end{tikzpicture}%
-  }
+  % \setbeamertemplate{background canvas}{%
+  %   \begin{tikzpicture}[remember picture,overlay]
+  %     \node [rectangle, left color=jnationredlight, right color=jnationred, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
+  %   \end{tikzpicture}%
+  % }
   \setbeamercolor*{footline}{fg=white}
   \setbeamercolor*{section name}{fg=white}
   \setbeamercolor*{section title}{fg=white}

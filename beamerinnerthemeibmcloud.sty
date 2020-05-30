@@ -3,7 +3,7 @@
 % Title page
 \defbeamertemplate*{title page}{ibmcloud}[1][]
 {
-  \begin{textblock*}{\paperwidth}(0.32cm,0.34cm)
+  \begin{textblock*}{\paperwidth}(1.5cm,0.34cm)
     \begin{beamercolorbox}[wd=0.50\paperwidth]{title page header}
       \usebeamerfont{title}\Huge\inserttitle\par---\par%
     \end{beamercolorbox}%
@@ -19,11 +19,11 @@
 
 \@namedef{ps@navigation@titlepage}{%
   \setbeamertemplate{footline}{%
-    \parbox{0.9\linewidth}{\vspace*{-20pt}\hspace*{10pt}\insertdate }%
-    \parbox{0.1\linewidth}{\vspace*{-20pt}\hspace*{70pt}}%
+    \parbox{0.9\linewidth}{\vspace*{-10pt}\hspace*{10pt}\insertdate }%
+    \parbox{0.1\linewidth}{\vspace*{-10pt}\hspace*{70pt}\insertframenumber/\inserttotalframenumber}%
   }
   \setbeamertemplate{background}{
-    \includegraphics[width=\paperwidth,height=\paperheight]{img/odsc_title_background.png}
+    \includegraphics[width=\paperwidth,height=\paperheight]{img/jnation_title_background.png}
   }
   \setbeamercolor*{footline}{fg=white}
   \@nameuse{ps@navigation}}
@@ -32,9 +32,9 @@
 % Section page
 \defbeamertemplate*{section page}{ibmcloud}[1][]
 {
-  \begin{textblock*}{\paperwidth}(0.32cm,0.34cm)
+  \begin{textblock*}{\paperwidth}(1.5cm,0.34cm)
     \begin{beamercolorbox}[wd=0.5\paperwidth]{title page header}
-      \usebeamerfont{title}\Huge---\par%
+      \usebeamerfont{section title}\Huge---\par%
     \end{beamercolorbox}%
     \begin{beamercolorbox}[wd=0.35\paperwidth]{section page header}
       \usebeamerfont{section name}\Huge\insertsection%
@@ -44,15 +44,17 @@
 }
 
 \@namedef{ps@navigation@sectionpage}{%
-  \setbeamertemplate{background canvas}{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node [rectangle, left color=sectiondarkblue, right color=sectionlightblue, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
-    \end{tikzpicture}%
+  \setbeamertemplate{footline}{%
+    \parbox{0.9\linewidth}{\vspace*{-10pt}\hspace*{10pt}\insertdate }%
+    \parbox{0.1\linewidth}{\vspace*{-10pt}\hspace*{70pt}}%
+  }
+  \setbeamertemplate{background}{
+    \includegraphics[width=\paperwidth,height=\paperheight]{img/jnation_section_background.png}
   }
   \setbeamercolor*{footline}{fg=white}
-  \setbeamercolor*{section name}{fg=white}
-  \setbeamercolor*{section title}{fg=white}
-  \setbeamercolor*{frametitle}{fg=white}
+  \setbeamercolor*{section name}{fg=jnationred}
+  \setbeamercolor*{section title}{fg=jnationred}
+  \setbeamercolor*{frametitle}{fg=jnationred}
   \@nameuse{ps@navigation}}
 \addtobeamertemplate{section page}{\thispagestyle{navigation@sectionpage}}{}
 
