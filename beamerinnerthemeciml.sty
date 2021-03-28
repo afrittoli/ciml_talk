@@ -1,0 +1,65 @@
+\mode<presentation>
+
+% Title page
+\defbeamertemplate*{title page}{ciml}[1][]
+{
+  \begin{textblock*}{\paperwidth}(0.2cm,0.34cm)
+    \begin{beamercolorbox}[wd=0.50\paperwidth]{title page header}
+      \usebeamerfont{title}\Huge\inserttitle\par---\par%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.70\paperwidth]{title page header}
+      \usebeamerfont{author}\LARGE\insertauthor\Huge\par---\par%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.60\paperwidth]{title page header}
+      \usebeamerfont{author}\LARGE\insertinstitute\par%
+    \end{beamercolorbox}%
+    \vfill
+  \end{textblock*}
+}
+
+\@namedef{ps@navigation@titlepage}{%
+  \setbeamertemplate{footline}{%
+    \parbox{0.9\linewidth}{\vspace*{-10pt}\hspace*{10pt}\insertdate }%
+    \parbox{0.1\linewidth}{\vspace*{-10pt}\hspace*{70pt}\insertframenumber/\inserttotalframenumber}%
+  }
+  % \setbeamertemplate{background}{
+  %   \includegraphics[width=\paperwidth,height=\paperheight]{img/jnation_title_background.png}
+  % }
+  \setbeamercolor*{footline}{fg=white}
+  \@nameuse{ps@navigation}}
+\addtobeamertemplate{title page}{\thispagestyle{navigation@titlepage}}{}
+
+% Section page
+\defbeamertemplate*{section page}{ciml}[1][]
+{
+  \begin{textblock*}{\paperwidth}(0.2cm,0.34cm)
+    \begin{beamercolorbox}[wd=0.5\paperwidth]{title page header}
+      \usebeamerfont{section title}\Huge---\par%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=0.35\paperwidth]{section page header}
+      \usebeamerfont{section name}\Huge\insertsection%
+    \end{beamercolorbox}%
+    \vfill
+  \end{textblock*}%
+}
+
+\@namedef{ps@navigation@sectionpage}{%
+  \setbeamertemplate{footline}{%
+    \parbox{0.9\linewidth}{\vspace*{-10pt}\hspace*{10pt}\insertdate }%
+    \parbox{0.1\linewidth}{\vspace*{-10pt}\hspace*{70pt}}%
+  }
+  % \setbeamertemplate{background}{
+  %   \includegraphics[width=\paperwidth,height=\paperheight]{img/jnation_section_background.png}
+  % }
+  \setbeamercolor*{footline}{fg=white}
+  \setbeamercolor*{section name}{fg=conference}
+  \setbeamercolor*{section title}{fg=conference}
+  \setbeamercolor*{frametitle}{fg=conference}
+  \@nameuse{ps@navigation}}
+\addtobeamertemplate{section page}{\thispagestyle{navigation@sectionpage}}{}
+
+\setbeamertemplate{itemize items}{--}
+\setbeamersize{text margin left=0.32cm,text margin right=0.32cm}
+
+\mode
+<all>
